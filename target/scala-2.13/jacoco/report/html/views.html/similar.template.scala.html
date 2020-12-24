@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>similar.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">similar.template.scala</span></div><h1>similar.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+/*1.2*/import java.util
+
+<span class="pc" id="L25">object similar extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template2[List[String],AssetsFinder,play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /**/
+  def apply/*2.2*/(sortedList: List[String])(implicit assetsFinder: AssetsFinder):play.twirl.api.HtmlFormat.Appendable = {
+<span class="fc" id="L29">    _display_ {</span>
+      {
+
+
+<span class="fc" id="L33">Seq[Any](format.raw/*3.1*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L34">    &quot;&quot;&quot;),_display_(/*4.6*/main(&quot;Search Result&quot;)/*4.27*/ {_display_(Seq[Any](format.raw/*4.29*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L35">    &quot;&quot;&quot;),format.raw/*5.5*/(&quot;&quot;&quot;&lt;head&gt;</span>
+        &lt;style type=&quot;text/css&quot;&gt;
+<span class="fc" id="L37">                h2&quot;&quot;&quot;),format.raw/*7.19*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*7.20*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L38">                    &quot;&quot;&quot;),format.raw/*8.21*/(&quot;&quot;&quot;margin-top: 20px;</span>
+                    color:#c5464a;
+                    font-size: 20px;
+<span class="fc" id="L41">                &quot;&quot;&quot;),format.raw/*11.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*11.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L42">                &quot;&quot;&quot;),format.raw/*12.17*/(&quot;&quot;&quot;body&quot;&quot;&quot;),format.raw/*12.21*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*12.22*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L43">                    &quot;&quot;&quot;),format.raw/*13.21*/(&quot;&quot;&quot;text-align: center;</span>
+
+<span class="fc" id="L45">                &quot;&quot;&quot;),format.raw/*15.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*15.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L46">                &quot;&quot;&quot;),format.raw/*16.17*/(&quot;&quot;&quot;table.gridtable &quot;&quot;&quot;),format.raw/*16.33*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*16.34*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L47">                    &quot;&quot;&quot;),format.raw/*17.21*/(&quot;&quot;&quot;font-family: verdana,arial,sans-serif;</span>
+                    font-size:11px;
+                    color:#333333;
+                    border-width: 1px;
+                    border-color: #666666;
+                    border-collapse: collapse;
+                    width:70%;
+                    margin:auto;
+                    margin-bottom: 10%;
+
+<span class="fc" id="L57">                &quot;&quot;&quot;),format.raw/*27.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*27.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L58">                &quot;&quot;&quot;),format.raw/*28.17*/(&quot;&quot;&quot;table.gridtable th &quot;&quot;&quot;),format.raw/*28.36*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*28.37*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L59">                    &quot;&quot;&quot;),format.raw/*29.21*/(&quot;&quot;&quot;border-width: 1px;</span>
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #c5464a;
+                    color: #FFFFFF;
+                    text-align: center;
+<span class="fc" id="L66">                &quot;&quot;&quot;),format.raw/*36.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*36.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L67">                &quot;&quot;&quot;),format.raw/*37.17*/(&quot;&quot;&quot;table.gridtable td &quot;&quot;&quot;),format.raw/*37.36*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*37.37*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L68">                    &quot;&quot;&quot;),format.raw/*38.21*/(&quot;&quot;&quot;border-width: 1px;</span>
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #ffffff;
+                    text-align: center;
+<span class="fc" id="L74">                &quot;&quot;&quot;),format.raw/*44.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*44.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L75">        &quot;&quot;&quot;),format.raw/*45.9*/(&quot;&quot;&quot;&lt;/style&gt;</span>
+
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class = &quot;container&quot;&gt;
+            &lt;table class=&quot;gridtable&quot;&gt;
+                &lt;tr&gt;
+                    &lt;th&gt;Title&lt;/th&gt;
+                &lt;/tr&gt;
+
+<span class="fc" id="L85">        &quot;&quot;&quot;),_display_(/*55.10*/for(result &lt;- sortedList) yield /*55.35*/ {_display_(Seq[Any](format.raw/*55.37*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L86">            &quot;&quot;&quot;),format.raw/*56.13*/(&quot;&quot;&quot;&lt;tr&gt;&lt;td&gt;Words : &quot;&quot;&quot;),_display_(/*56.30*/result),format.raw/*56.36*/(&quot;&quot;&quot;&lt;/td&gt;&lt;/tr&gt;</span>
+
+<span class="fc" id="L88">        &quot;&quot;&quot;)))}),format.raw/*58.10*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L89">            &quot;&quot;&quot;),format.raw/*59.13*/(&quot;&quot;&quot;&lt;/table&gt;</span>
+        &lt;/div&gt;
+    &lt;/body&gt;
+<span class="fc" id="L92">    &quot;&quot;&quot;)))}),format.raw/*62.6*/(&quot;&quot;&quot;</span>
+&quot;&quot;&quot;))
+      }
+    }
+  }
+
+<span class="fc" id="L98">  def render(sortedList:List[String],assetsFinder:AssetsFinder): play.twirl.api.HtmlFormat.Appendable = apply(sortedList)(assetsFinder)</span>
+
+<span class="nc" id="L100">  def f:((List[String]) =&gt; (AssetsFinder) =&gt; play.twirl.api.HtmlFormat.Appendable) = (sortedList) =&gt; (assetsFinder) =&gt; apply(sortedList)(assetsFinder)</span>
+
+<span class="nc" id="L102">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  DATE: 2020-12-16T14:00:54.410959
+                  SOURCE: /Users/yuejunchen/Dropbox/SOEN6441/Assignment Two/app/views/similar.scala.html
+                  HASH: 7a9537bc2d6ef8692a9ca6690abd74bfce690ed5
+                  MATRIX: 610-&gt;1|952-&gt;19|1109-&gt;83|1140-&gt;89|1169-&gt;110|1208-&gt;112|1239-&gt;117|1323-&gt;174|1351-&gt;175|1399-&gt;196|1533-&gt;302|1562-&gt;303|1607-&gt;320|1639-&gt;324|1668-&gt;325|1717-&gt;346|1782-&gt;383|1811-&gt;384|1856-&gt;401|1900-&gt;417|1929-&gt;418|1978-&gt;439|2366-&gt;799|2395-&gt;800|2440-&gt;817|2487-&gt;836|2516-&gt;837|2565-&gt;858|2869-&gt;1134|2898-&gt;1135|2943-&gt;1152|2990-&gt;1171|3019-&gt;1172|3068-&gt;1193|3336-&gt;1433|3365-&gt;1434|3401-&gt;1443|3621-&gt;1636|3662-&gt;1661|3702-&gt;1663|3743-&gt;1676|3787-&gt;1693|3814-&gt;1699|3866-&gt;1720|3907-&gt;1733|3978-&gt;1774
+                  LINES: 23-&gt;1|28-&gt;2|33-&gt;3|34-&gt;4|34-&gt;4|34-&gt;4|35-&gt;5|37-&gt;7|37-&gt;7|38-&gt;8|41-&gt;11|41-&gt;11|42-&gt;12|42-&gt;12|42-&gt;12|43-&gt;13|45-&gt;15|45-&gt;15|46-&gt;16|46-&gt;16|46-&gt;16|47-&gt;17|57-&gt;27|57-&gt;27|58-&gt;28|58-&gt;28|58-&gt;28|59-&gt;29|66-&gt;36|66-&gt;36|67-&gt;37|67-&gt;37|67-&gt;37|68-&gt;38|74-&gt;44|74-&gt;44|75-&gt;45|85-&gt;55|85-&gt;55|85-&gt;55|86-&gt;56|86-&gt;56|86-&gt;56|88-&gt;58|89-&gt;59|92-&gt;62
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

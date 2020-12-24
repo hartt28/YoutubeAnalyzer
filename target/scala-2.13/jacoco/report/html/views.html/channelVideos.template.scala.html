@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>channelVideos.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">channelVideos.template.scala</span></div><h1>channelVideos.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+/*5.2*/import java.util.concurrent.CompletableFuture
+/*6.2*/import com.google.api.services.youtube.model.PlaylistItem
+
+<span class="pc" id="L26">object channelVideos extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template2[List[Videos],AssetsFinder,play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /**/
+  def apply/*8.2*/(list:List[Videos])(implicit assetsFinder: AssetsFinder):play.twirl.api.HtmlFormat.Appendable = {
+<span class="fc" id="L30">    _display_ {</span>
+      {
+
+
+<span class="fc" id="L34">Seq[Any](format.raw/*9.1*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L35">&quot;&quot;&quot;),format.raw/*14.3*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L36">&quot;&quot;&quot;),_display_(/*15.2*/main(&quot;Search Result&quot;)/*15.23*/ {_display_(Seq[Any](format.raw/*15.25*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L37">&quot;&quot;&quot;),format.raw/*16.1*/(&quot;&quot;&quot;&lt;!DOCTYPE html&gt;</span>
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;style type=&quot;text/css&quot;&gt;
+<span class="fc" id="L41">                h2&quot;&quot;&quot;),format.raw/*20.19*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*20.20*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L42">                    &quot;&quot;&quot;),format.raw/*21.21*/(&quot;&quot;&quot;margin-top: 20px;</span>
+                    color:#c5464a;
+                    font-size: 20px;
+<span class="fc" id="L45">                &quot;&quot;&quot;),format.raw/*24.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*24.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L46">                &quot;&quot;&quot;),format.raw/*25.17*/(&quot;&quot;&quot;body&quot;&quot;&quot;),format.raw/*25.21*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*25.22*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L47">                    &quot;&quot;&quot;),format.raw/*26.21*/(&quot;&quot;&quot;text-align: center;</span>
+
+<span class="fc" id="L49">                &quot;&quot;&quot;),format.raw/*28.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*28.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L50">                &quot;&quot;&quot;),format.raw/*29.17*/(&quot;&quot;&quot;table.gridtable &quot;&quot;&quot;),format.raw/*29.33*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*29.34*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L51">                    &quot;&quot;&quot;),format.raw/*30.21*/(&quot;&quot;&quot;font-family: verdana,arial,sans-serif;</span>
+                    font-size:11px;
+                    color:#333333;
+                    border-width: 1px;
+                    border-color: #666666;
+                    border-collapse: collapse;
+                    width:70%;
+                    margin:auto;
+                    margin-bottom: 10%;
+
+<span class="fc" id="L61">                &quot;&quot;&quot;),format.raw/*40.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*40.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L62">                &quot;&quot;&quot;),format.raw/*41.17*/(&quot;&quot;&quot;table.gridtable th &quot;&quot;&quot;),format.raw/*41.36*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*41.37*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L63">                    &quot;&quot;&quot;),format.raw/*42.21*/(&quot;&quot;&quot;border-width: 1px;</span>
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #c5464a;
+                    color: #FFFFFF;
+                    text-align: center;
+<span class="fc" id="L70">                &quot;&quot;&quot;),format.raw/*49.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*49.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L71">                &quot;&quot;&quot;),format.raw/*50.17*/(&quot;&quot;&quot;table.gridtable td &quot;&quot;&quot;),format.raw/*50.36*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*50.37*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L72">                    &quot;&quot;&quot;),format.raw/*51.21*/(&quot;&quot;&quot;border-width: 1px;</span>
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #ffffff;
+                    text-align: center;
+<span class="fc" id="L78">                &quot;&quot;&quot;),format.raw/*57.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*57.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L79">        &quot;&quot;&quot;),format.raw/*58.9*/(&quot;&quot;&quot;&lt;/style&gt;</span>
+
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;body&gt;
+            &lt;div class = &quot;container&quot;&gt;
+                &lt;table class=&quot;gridtable&quot;&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Title&lt;/th&gt;
+                    &lt;/tr&gt;
+<span class="fc" id="L89">        &quot;&quot;&quot;),_display_(/*68.10*/for(result &lt;- list) yield /*68.29*/ {_display_(Seq[Any](format.raw/*68.31*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L90">            &quot;&quot;&quot;),format.raw/*69.13*/(&quot;&quot;&quot;&lt;tr&gt;</span>
+<span class="fc" id="L91">                &lt;td&gt;&quot;&quot;&quot;),_display_(/*70.22*/result/*70.28*/.getStringDate),format.raw/*70.42*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+<span class="fc" id="L92">                &lt;td&gt;&quot;&quot;&quot;),_display_(/*71.22*/result/*71.28*/.getVideoTitle),format.raw/*71.42*/(&quot;&quot;&quot;&lt;/td&gt;</span>
+            &lt;/tr&gt;
+<span class="fc" id="L94">        &quot;&quot;&quot;)))}),format.raw/*73.10*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L95">                &quot;&quot;&quot;),format.raw/*74.17*/(&quot;&quot;&quot;&lt;/table&gt;</span>
+            &lt;/div&gt;
+    &lt;/body&gt;
+<span class="fc" id="L98">&quot;&quot;&quot;)))}),format.raw/*77.2*/(&quot;&quot;&quot;</span>
+
+
+
+&quot;&quot;&quot;))
+      }
+    }
+  }
+
+<span class="fc" id="L107">  def render(list:List[Videos],assetsFinder:AssetsFinder): play.twirl.api.HtmlFormat.Appendable = apply(list)(assetsFinder)</span>
+
+<span class="nc" id="L109">  def f:((List[Videos]) =&gt; (AssetsFinder) =&gt; play.twirl.api.HtmlFormat.Appendable) = (list) =&gt; (assetsFinder) =&gt; apply(list)(assetsFinder)</span>
+
+<span class="nc" id="L111">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  DATE: 2020-12-10T23:10:15.894845
+                  SOURCE: /Users/yuejunchen/Dropbox/SOEN6441/Assignment Two/app/views/channelVideos.scala.html
+                  HASH: 682ed0a11c9364a876e32e965fc9b3071501a23b
+                  MATRIX: 610-&gt;134|663-&gt;181|1052-&gt;241|1202-&gt;298|1230-&gt;489|1258-&gt;491|1288-&gt;512|1328-&gt;514|1356-&gt;515|1478-&gt;609|1507-&gt;610|1556-&gt;631|1690-&gt;737|1719-&gt;738|1764-&gt;755|1796-&gt;759|1825-&gt;760|1874-&gt;781|1939-&gt;818|1968-&gt;819|2013-&gt;836|2057-&gt;852|2086-&gt;853|2135-&gt;874|2523-&gt;1234|2552-&gt;1235|2597-&gt;1252|2644-&gt;1271|2673-&gt;1272|2722-&gt;1293|3026-&gt;1569|3055-&gt;1570|3100-&gt;1587|3147-&gt;1606|3176-&gt;1607|3225-&gt;1628|3493-&gt;1868|3522-&gt;1869|3558-&gt;1878|3825-&gt;2118|3860-&gt;2137|3900-&gt;2139|3941-&gt;2152|3994-&gt;2178|4009-&gt;2184|4044-&gt;2198|4098-&gt;2225|4113-&gt;2231|4148-&gt;2245|4212-&gt;2278|4257-&gt;2295|4328-&gt;2336
+                  LINES: 23-&gt;5|24-&gt;6|29-&gt;8|34-&gt;9|35-&gt;14|36-&gt;15|36-&gt;15|36-&gt;15|37-&gt;16|41-&gt;20|41-&gt;20|42-&gt;21|45-&gt;24|45-&gt;24|46-&gt;25|46-&gt;25|46-&gt;25|47-&gt;26|49-&gt;28|49-&gt;28|50-&gt;29|50-&gt;29|50-&gt;29|51-&gt;30|61-&gt;40|61-&gt;40|62-&gt;41|62-&gt;41|62-&gt;41|63-&gt;42|70-&gt;49|70-&gt;49|71-&gt;50|71-&gt;50|71-&gt;50|72-&gt;51|78-&gt;57|78-&gt;57|79-&gt;58|89-&gt;68|89-&gt;68|89-&gt;68|90-&gt;69|91-&gt;70|91-&gt;70|91-&gt;70|92-&gt;71|92-&gt;71|92-&gt;71|94-&gt;73|95-&gt;74|98-&gt;77
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

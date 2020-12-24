@@ -1,0 +1,137 @@
+@*
+* This template takes a two arguments, a String containing a
+* message to display and an AssetsFinder to locate static assets.
+*@
+@import com.google.api.services.youtube.model.SearchResult
+@import java.util.concurrent.CompletableFuture
+@(keyword: String ,list : List[SearchingResults])(implicit assetsFinder: AssetsFinder)
+
+
+@*
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+@main("Search Result") {
+    <head>
+        <style type="text/css">
+                h2{
+                    margin-top: 20px;
+                    color:#c5464a;
+                    font-size: 20px;
+                }
+                body{
+                    text-align: center;
+
+                }
+                table.gridtable {
+                    font-family: verdana,arial,sans-serif;
+                    font-size:11px;
+                    color:#333333;
+                    border-width: 1px;
+                    border-color: #666666;
+                    border-collapse: collapse;
+                    width:70%;
+                    margin:auto;
+                    margin-bottom: 10%;
+
+                }
+                table.gridtable th {
+                    border-width: 1px;
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #c5464a;
+                    color: #FFFFFF;
+                    text-align: center;
+                }
+                table.gridtable td {
+                    border-width: 1px;
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #ffffff;
+                    text-align: center;
+                }
+        </style>
+
+    </head>
+    <body>
+        <div id="searchkey"> </div>
+    <div class = "container">
+    <br>
+    <h2 style="color: #cc0000; text-align: center">Search results for: @keyword</h2>
+
+
+
+            <table class="gridtable" id="table">
+                <tr>
+                    <th>Title</th>
+                    <th>Channel Name</th>
+                    <th>Recent Videos</th>
+                    <th>View Counts</th>
+                    <th>Time lapsed</th>
+                    <th>Sentiment</th>
+                </tr>
+                <div id="videos"></div>
+
+@*//*@@*                <td id="videoTitle"></td>*@
+@*//*@@*                <td><a href=@routes.HomeController.profile(result.getChannelID)>@result.getChannelTitle</a></td>*@
+@*//*@@*                <td><a href=@routes.HomeController.CVideos(result.getChannelID, keyword)>@result.getChannelTitle</a></td>*@
+@*//*@@*                <td>@result.getViewCount</td>*@
+@*//*@@*                <td>@result.getTimeAgo mins</td>*@
+@*//*@@*                <td id="sentiment"></td>*@
+@*//                *@@* <div id="videos"></div>*@
+            </table>
+
+
+    </div>
+    </body>
+
+    <script type="text/javascript">
+            let idList =[];
+            let videoList = [];
+            var websocket;
+            websocket = new WebSocket("ws://localhost:9000/ws");
+            websocket.onmessage = function processMessage(message){
+                var message = JSON.parse(message.data);
+                if(idList.includes(message.videoId)){console.log(message)}
+                else {
+                    idList.push(message.videoId);
+                    console.log(message);
+                    parseVideos(message);
+                }
+            }
+            function sendMessage(){
+                websocket.send(query.value);
+                console.log(query.value);
+            }
+
+            function parseVideos(message){
+                var tr=document.createElement("tr");
+                var vtitle=document.createElement("td");
+                var ctitle=document.createElement("td");
+                var ctitle2=document.createElement("td");
+                var view = document.createElement("td");
+                var time=document.createElement("td");
+                var sentiment=document.createElement("td");
+
+                vtitle.innerHTML= '<a href="http://localhost:9000/similar?videoId='+ message.videoId+'">' + message.videoTitle + '</a>';
+                ctitle.innerHTML='<a href="http://localhost:9000/profile/'+ message.channelID +'">' + message.channelTitle + '</a>';
+                ctitle2.innerHTML='<a href="http://localhost:9000/CVideos?channelID='+ message.channelID +'&keyword='+message.query+'">' + message.channelTitle + '</a>';
+                view.innerHTML = message.viewCount;
+                time.innerHTML= message.timeAgo;
+                sentiment.innerHTML= message.sentiment;
+
+                var tab= document.getElementById("table");
+                tab.appendChild(tr);
+                tr.appendChild(vtitle);
+                tr.appendChild(ctitle);
+                tr.appendChild(ctitle2);
+                tr.appendChild(view);
+                tr.appendChild(time);
+                tr.appendChild(sentiment);
+
+            }
+    </script>
+}

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>profile.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">profile.template.scala</span></div><h1>profile.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+
+<span class="pc" id="L24">object profile extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template2[ProfileImp,AssetsFinder,play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /*
+* This template takes a two arguments, a String containing a
+* message to display and an AssetsFinder to locate static assets.
+*/
+  def apply/*6.2*/(imp : ProfileImp)(implicit assetsFinder: AssetsFinder):play.twirl.api.HtmlFormat.Appendable = {
+<span class="fc" id="L31">    _display_ {</span>
+      {
+
+
+<span class="fc" id="L35">Seq[Any](format.raw/*7.1*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L36">&quot;&quot;&quot;),format.raw/*12.4*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L38">    &quot;&quot;&quot;),format.raw/*14.5*/(&quot;&quot;&quot;&lt;!DOCTYPE html&gt;</span>
+    &lt;html lang=&quot;en&quot;&gt;
+        &lt;head&gt;
+            &lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+            &lt;style&gt;
+<span class="fc" id="L43">                    * &quot;&quot;&quot;),format.raw/*19.23*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*19.24*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L44">                        &quot;&quot;&quot;),format.raw/*20.25*/(&quot;&quot;&quot;box-sizing: border-box;</span>
+<span class="fc" id="L45">                    &quot;&quot;&quot;),format.raw/*21.21*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*21.22*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L47">                    &quot;&quot;&quot;),format.raw/*23.21*/(&quot;&quot;&quot;body &quot;&quot;&quot;),format.raw/*23.26*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*23.27*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L48">                        &quot;&quot;&quot;),format.raw/*24.25*/(&quot;&quot;&quot;font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial,sans-serif, FreeSans, Arimo;</span>
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-direction: column;
+                        min-height: 100vh;
+                        margin: 0;
+<span class="fc" id="L55">                    &quot;&quot;&quot;),format.raw/*31.21*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*31.22*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L57">                    &quot;&quot;&quot;),format.raw/*33.21*/(&quot;&quot;&quot;.channel &quot;&quot;&quot;),format.raw/*33.30*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*33.31*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L58">                        &quot;&quot;&quot;),format.raw/*34.25*/(&quot;&quot;&quot;background-color: #fff;</span>
+                        border-radius: 10px;
+                        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+                        display: flex;
+                        max-width: 100%;
+                        margin: 20px;
+                        width: 700px;
+                        word-break: normal;
+<span class="fc" id="L66">                    &quot;&quot;&quot;),format.raw/*42.21*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*42.22*/(&quot;&quot;&quot;</span>
+
+
+<span class="fc" id="L69">                    &quot;&quot;&quot;),format.raw/*45.21*/(&quot;&quot;&quot;.channel h6 &quot;&quot;&quot;),format.raw/*45.33*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*45.34*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L70">                        &quot;&quot;&quot;),format.raw/*46.25*/(&quot;&quot;&quot;opacity: 0.6;</span>
+                        margin: 0;
+                        letter-spacing: 1px;
+                        text-transform: uppercase;
+<span class="fc" id="L74">                    &quot;&quot;&quot;),format.raw/*50.21*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*50.22*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L76">                    &quot;&quot;&quot;),format.raw/*52.21*/(&quot;&quot;&quot;.channel h5 &quot;&quot;&quot;),format.raw/*52.33*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*52.34*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L77">                        &quot;&quot;&quot;),format.raw/*53.25*/(&quot;&quot;&quot;margin: 2px;</span>
+                        letter-spacing: 1px;
+                        font-size: medium;
+<span class="fc" id="L80">                    &quot;&quot;&quot;),format.raw/*56.21*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*56.22*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L82">                    &quot;&quot;&quot;),format.raw/*58.21*/(&quot;&quot;&quot;.channel p &quot;&quot;&quot;),format.raw/*58.32*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*58.33*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L83">                        &quot;&quot;&quot;),format.raw/*59.25*/(&quot;&quot;&quot;font-size: large;</span>
+                        font-weight: bold;
+                        letter-spacing: 1px;
+                        margin: 10px 0;
+<span class="fc" id="L87">                    &quot;&quot;&quot;),format.raw/*63.21*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*63.22*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L88">                    &quot;&quot;&quot;),format.raw/*64.21*/(&quot;&quot;&quot;.channel-name &quot;&quot;&quot;),format.raw/*64.35*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*64.36*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L89">                        &quot;&quot;&quot;),format.raw/*65.25*/(&quot;&quot;&quot;background-color: #c5464a;</span>
+                        color: #fff;
+                        padding: 30px;
+                        max-width: 250px;
+<span class="fc" id="L93">                    &quot;&quot;&quot;),format.raw/*69.21*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*69.22*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L95">                    &quot;&quot;&quot;),format.raw/*71.21*/(&quot;&quot;&quot;.cahnnel-info &quot;&quot;&quot;),format.raw/*71.35*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*71.36*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L96">                        &quot;&quot;&quot;),format.raw/*72.25*/(&quot;&quot;&quot;padding: 30px;</span>
+                        position: relative;
+                        width: 100%;
+<span class="fc" id="L99">                    &quot;&quot;&quot;),format.raw/*75.21*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*75.22*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L100">            &quot;&quot;&quot;),format.raw/*76.13*/(&quot;&quot;&quot;&lt;/style&gt;</span>
+            &lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+        &lt;/head&gt;
+<span class="fc" id="L103">&quot;&quot;&quot;),format.raw/*79.19*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L104">&quot;&quot;&quot;),format.raw/*80.66*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L105">&quot;&quot;&quot;),format.raw/*81.77*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L106">&quot;&quot;&quot;),format.raw/*82.95*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L107">&quot;&quot;&quot;),format.raw/*83.87*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L108">&quot;&quot;&quot;),format.raw/*84.101*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L109">&quot;&quot;&quot;),format.raw/*85.86*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L110">&quot;&quot;&quot;),format.raw/*86.23*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L111">&quot;&quot;&quot;),format.raw/*87.20*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L112">        &quot;&quot;&quot;),format.raw/*88.9*/(&quot;&quot;&quot;&lt;body&gt;</span>
+        &lt;div class=&quot;channel-container&quot;&gt;
+            &lt;div class=&quot;channel&quot;&gt;
+                &lt;div class=&quot;channel-name&quot;&gt;
+<span class="fc" id="L116">                    &lt;img src=&quot;&quot;&quot;),_display_(/*92.31*/imp/*92.34*/.getUrl),format.raw/*92.41*/(&quot;&quot;&quot; &quot;&quot;&quot;),format.raw/*92.42*/(&quot;&quot;&quot;width=&quot;90px&quot; height=&quot;100px&quot;&gt;</span>
+                    &lt;br&gt;
+                    &lt;br&gt;
+                    &lt;h6&gt;Channel&lt;/h6&gt;
+<span class="fc" id="L120">                    &lt;p&gt;&quot;&quot;&quot;),_display_(/*96.25*/imp/*96.28*/.getTitle),format.raw/*96.37*/(&quot;&quot;&quot;&lt;/p&gt;</span>
+                &lt;/div&gt;
+                &lt;div class=&quot;channel-info&quot;&gt;
+                    &lt;h6&gt;Channel description&lt;/h6&gt;
+<span class="fc" id="L124">                        &lt;h5&gt;&quot;&quot;&quot;),_display_(/*100.30*/imp/*100.33*/.getDescription),format.raw/*100.48*/(&quot;&quot;&quot;&lt;/h5&gt;&lt;br&gt;</span>
+                        &lt;h6&gt;Total view count&lt;/h6&gt;
+<span class="fc" id="L126">                    &lt;h5&gt;&quot;&quot;&quot;),_display_(/*102.26*/imp/*102.29*/.getTotalViews),format.raw/*102.43*/(&quot;&quot;&quot;&lt;/h5&gt;</span>
+                        &lt;h6&gt;Subscriber count&lt;/h6&gt;
+<span class="fc" id="L128">                    &lt;h5&gt;&quot;&quot;&quot;),_display_(/*104.26*/imp/*104.29*/.getTotalSubscribers),format.raw/*104.49*/(&quot;&quot;&quot;&lt;/h5&gt;</span>
+                        &lt;h6&gt;Video count&lt;/h6&gt;
+<span class="fc" id="L130">                    &lt;h5&gt;&quot;&quot;&quot;),_display_(/*106.26*/imp/*106.29*/.getTotVideos),format.raw/*106.42*/(&quot;&quot;&quot;&lt;/h5&gt;</span>
+                    &lt;h6&gt;Created Date&lt;/h6&gt;
+<span class="fc" id="L132">                    &lt;h5&gt;&quot;&quot;&quot;),_display_(/*108.26*/imp/*108.29*/.getPublish),format.raw/*108.40*/(&quot;&quot;&quot;&lt;/h5&gt;</span>
+                    &lt;h6&gt;Location&lt;/h6&gt;
+<span class="fc" id="L134">                    &lt;h5&gt;&quot;&quot;&quot;),_display_(/*110.26*/imp/*110.29*/.getCountry),format.raw/*110.40*/(&quot;&quot;&quot;&lt;/h5&gt;</span>
+                &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/body&gt;
+    &lt;/html&gt;
+&quot;&quot;&quot;))
+      }
+    }
+  }
+
+<span class="fc" id="L145">  def render(imp:ProfileImp,assetsFinder:AssetsFinder): play.twirl.api.HtmlFormat.Appendable = apply(imp)(assetsFinder)</span>
+
+<span class="nc" id="L147">  def f:((ProfileImp) =&gt; (AssetsFinder) =&gt; play.twirl.api.HtmlFormat.Appendable) = (imp) =&gt; (assetsFinder) =&gt; apply(imp)(assetsFinder)</span>
+
+<span class="nc" id="L149">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  DATE: 2020-12-11T09:47:23.471527
+                  SOURCE: /Users/yuejunchen/Dropbox/SOEN6441/Assignment Two/app/views/profile.scala.html
+                  HASH: 5b44345f0cca7f2a14488c4cf18aa38de1ab2d07
+                  MATRIX: 1054-&gt;135|1203-&gt;191|1231-&gt;386|1264-&gt;392|1443-&gt;543|1472-&gt;544|1525-&gt;569|1597-&gt;613|1626-&gt;614|1676-&gt;636|1709-&gt;641|1738-&gt;642|1791-&gt;667|2186-&gt;1034|2215-&gt;1035|2265-&gt;1057|2302-&gt;1066|2331-&gt;1067|2384-&gt;1092|2769-&gt;1449|2798-&gt;1450|2849-&gt;1473|2889-&gt;1485|2918-&gt;1486|2971-&gt;1511|3164-&gt;1676|3193-&gt;1677|3243-&gt;1699|3283-&gt;1711|3312-&gt;1712|3365-&gt;1737|3514-&gt;1858|3543-&gt;1859|3593-&gt;1881|3632-&gt;1892|3661-&gt;1893|3714-&gt;1918|3908-&gt;2084|3937-&gt;2085|3986-&gt;2106|4028-&gt;2120|4057-&gt;2121|4110-&gt;2146|4303-&gt;2311|4332-&gt;2312|4382-&gt;2334|4424-&gt;2348|4453-&gt;2349|4506-&gt;2374|4650-&gt;2490|4679-&gt;2491|4720-&gt;2504|4830-&gt;2604|4859-&gt;2670|4888-&gt;2747|4917-&gt;2842|4946-&gt;2929|4976-&gt;3030|5005-&gt;3116|5034-&gt;3139|5063-&gt;3159|5099-&gt;3168|5280-&gt;3322|5292-&gt;3325|5320-&gt;3332|5349-&gt;3333|5516-&gt;3473|5528-&gt;3476|5558-&gt;3485|5735-&gt;3634|5748-&gt;3637|5785-&gt;3652|5898-&gt;3737|5911-&gt;3740|5947-&gt;3754|6056-&gt;3835|6069-&gt;3838|6111-&gt;3858|6215-&gt;3934|6228-&gt;3937|6263-&gt;3950|6364-&gt;4023|6377-&gt;4026|6410-&gt;4037|6507-&gt;4106|6520-&gt;4109|6553-&gt;4120
+                  LINES: 30-&gt;6|35-&gt;7|36-&gt;12|38-&gt;14|43-&gt;19|43-&gt;19|44-&gt;20|45-&gt;21|45-&gt;21|47-&gt;23|47-&gt;23|47-&gt;23|48-&gt;24|55-&gt;31|55-&gt;31|57-&gt;33|57-&gt;33|57-&gt;33|58-&gt;34|66-&gt;42|66-&gt;42|69-&gt;45|69-&gt;45|69-&gt;45|70-&gt;46|74-&gt;50|74-&gt;50|76-&gt;52|76-&gt;52|76-&gt;52|77-&gt;53|80-&gt;56|80-&gt;56|82-&gt;58|82-&gt;58|82-&gt;58|83-&gt;59|87-&gt;63|87-&gt;63|88-&gt;64|88-&gt;64|88-&gt;64|89-&gt;65|93-&gt;69|93-&gt;69|95-&gt;71|95-&gt;71|95-&gt;71|96-&gt;72|99-&gt;75|99-&gt;75|100-&gt;76|103-&gt;79|104-&gt;80|105-&gt;81|106-&gt;82|107-&gt;83|108-&gt;84|109-&gt;85|110-&gt;86|111-&gt;87|112-&gt;88|116-&gt;92|116-&gt;92|116-&gt;92|116-&gt;92|120-&gt;96|120-&gt;96|120-&gt;96|124-&gt;100|124-&gt;100|124-&gt;100|126-&gt;102|126-&gt;102|126-&gt;102|128-&gt;104|128-&gt;104|128-&gt;104|130-&gt;106|130-&gt;106|130-&gt;106|132-&gt;108|132-&gt;108|132-&gt;108|134-&gt;110|134-&gt;110|134-&gt;110
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

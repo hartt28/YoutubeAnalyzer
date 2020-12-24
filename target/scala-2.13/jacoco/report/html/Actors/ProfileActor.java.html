@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProfileActor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">Actors</a> &gt; <span class="el_source">ProfileActor.java</span></div><h1>ProfileActor.java</h1><pre class="source lang-java linenums">package Actors;
+
+import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import models.ProfileImp;
+import services.AsynProcessor;
+import static akka.pattern.Patterns.pipe;
+
+
+import java.util.concurrent.CompletionStage;
+/**
+ * @author Chenwen Wang
+ */
+public class ProfileActor extends AbstractActor {
+    /**AsynProcessor from services*/
+    private AsynProcessor asynProcessor;
+    /**ActorRef of Actor*/
+    private ActorRef actorRef;
+    /**
+     * Constructor
+     */
+<span class="fc" id="L23">    public ProfileActor() {</span>
+<span class="fc" id="L24">        this.asynProcessor = new AsynProcessor();</span>
+<span class="fc" id="L25">    }</span>
+    /**
+     * Create an instance of the class using {@link Props}.
+     */
+    public static Props props(){
+<span class="fc" id="L30">        return Props.create(ProfileActor.class);</span>
+    }
+    /**
+     * Start Actor
+     */
+    @Override
+    public void preStart(){
+<span class="fc" id="L37">        System.out.println(&quot;Profile Actor Started&quot;);</span>
+<span class="fc" id="L38">    }</span>
+    /**
+     * Profile Message
+     */
+    static public class ProfileRequest{
+        String channelId;
+<span class="fc" id="L44">        public ProfileRequest(String channelId) {</span>
+<span class="fc" id="L45">            this.channelId = channelId;</span>
+<span class="fc" id="L46">        }</span>
+    }
+
+    /**
+     * Handle the incoming messages
+     * @return Receive receive
+     */
+    @Override
+    public Receive createReceive() {
+<span class="fc" id="L55">        return receiveBuilder().</span>
+<span class="fc" id="L56">                match(ProfileRequest.class,</span>
+                        profileRequest -&gt;
+                        {
+<span class="fc" id="L59">                CompletionStage&lt;ProfileImp&gt; completionStage = asynProcessor.processProfileAsync(profileRequest.channelId);</span>
+<span class="fc" id="L60">                actorRef = getSender();</span>
+<span class="fc" id="L61">                pipe(completionStage,getContext().dispatcher()).to(actorRef);</span>
+<span class="fc" id="L62">        }</span>
+<span class="fc" id="L63">        ).build();</span>
+    }
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

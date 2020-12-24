@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VideosActor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">Actors</a> &gt; <span class="el_source">VideosActor.java</span></div><h1>VideosActor.java</h1><pre class="source lang-java linenums">package Actors;
+
+import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import com.google.api.services.youtube.model.Video;
+import models.ProfileImp;
+import models.Videos;
+import services.AsynProcessor;
+
+import java.util.List;
+import java.util.concurrent.CompletionStage;
+
+import static akka.pattern.Patterns.pipe;
+/**
+ * @author Yuejun Chen
+ */
+public class VideosActor extends AbstractActor {
+    /**AsynProcessor from services*/
+    private AsynProcessor asynProcessor;
+    /**ActorRef of Actor*/
+    private ActorRef actorRef;
+    /**
+     * Constructor
+     */
+<span class="fc" id="L26">    public VideosActor() {</span>
+<span class="fc" id="L27">        this.asynProcessor = new AsynProcessor();</span>
+<span class="fc" id="L28">    }</span>
+    /**
+     * Create an instance of the class using @props.
+     */
+    public static Props props(){
+<span class="fc" id="L33">        return Props.create(VideosActor.class);</span>
+    }
+
+    /**
+     * Video Message
+     */
+    static public class VideosRequest{
+        String channelId;
+        String keyword;
+<span class="fc" id="L42">        public VideosRequest(String channelId, String keyword) {</span>
+<span class="fc" id="L43">            this.channelId = channelId;</span>
+<span class="fc" id="L44">            this.keyword = keyword;</span>
+<span class="fc" id="L45">        }</span>
+    }
+    /**
+     * Handle the incoming messages
+     * @return Receive receive
+     *
+     *      * Performs the following actions:
+     *      * 1. Whenever a {@link JsonNode} message protocol is received, it performs a call on the get
+     *      * asynprocessor's CV videos, @see searchVideos.
+     *
+     */
+    //
+    @Override
+    public Receive createReceive() {
+<span class="fc" id="L59">        return receiveBuilder().</span>
+<span class="fc" id="L60">                match(VideosActor.VideosRequest.class,</span>
+                        VideosRequest -&gt;
+                        {
+                            //调用
+<span class="fc" id="L64">                            CompletionStage&lt;List&lt;Videos&gt;&gt; completionStage = asynProcessor.processPlayListAsync(VideosRequest.channelId, VideosRequest.keyword);</span>
+                            //HUOQU
+<span class="fc" id="L66">                            actorRef = getSender();</span>
+                            //谁发的信息  用pipe保存
+                            //跟剧
+<span class="fc" id="L69">                            pipe(completionStage,getContext().dispatcher()).to(actorRef);</span>
+<span class="fc" id="L70">                        }</span>
+<span class="fc" id="L71">                ).build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

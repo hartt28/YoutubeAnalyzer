@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>search.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">search.template.scala</span></div><h1>search.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+/*5.2*/import com.google.api.services.youtube.model.SearchResult
+/*6.2*/import java.util.concurrent.CompletableFuture
+
+<span class="pc" id="L26">object search extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template3[String,List[SearchingResults],AssetsFinder,play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /**/
+  def apply/*7.2*/(keyword: String ,list : List[SearchingResults])(implicit assetsFinder: AssetsFinder):play.twirl.api.HtmlFormat.Appendable = {
+<span class="fc" id="L30">    _display_ {</span>
+      {
+
+
+<span class="fc" id="L34">Seq[Any](format.raw/*8.1*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L36">&quot;&quot;&quot;),format.raw/*14.3*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L37">&quot;&quot;&quot;),_display_(/*15.2*/main(&quot;Search Result&quot;)/*15.23*/ {_display_(Seq[Any](format.raw/*15.25*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L38">    &quot;&quot;&quot;),format.raw/*16.5*/(&quot;&quot;&quot;&lt;head&gt;</span>
+        &lt;style type=&quot;text/css&quot;&gt;
+<span class="fc" id="L40">                h2&quot;&quot;&quot;),format.raw/*18.19*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*18.20*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L41">                    &quot;&quot;&quot;),format.raw/*19.21*/(&quot;&quot;&quot;margin-top: 20px;</span>
+                    color:#c5464a;
+                    font-size: 20px;
+<span class="fc" id="L44">                &quot;&quot;&quot;),format.raw/*22.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*22.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L45">                &quot;&quot;&quot;),format.raw/*23.17*/(&quot;&quot;&quot;body&quot;&quot;&quot;),format.raw/*23.21*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*23.22*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L46">                    &quot;&quot;&quot;),format.raw/*24.21*/(&quot;&quot;&quot;text-align: center;</span>
+
+<span class="fc" id="L48">                &quot;&quot;&quot;),format.raw/*26.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*26.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L49">                &quot;&quot;&quot;),format.raw/*27.17*/(&quot;&quot;&quot;table.gridtable &quot;&quot;&quot;),format.raw/*27.33*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*27.34*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L50">                    &quot;&quot;&quot;),format.raw/*28.21*/(&quot;&quot;&quot;font-family: verdana,arial,sans-serif;</span>
+                    font-size:11px;
+                    color:#333333;
+                    border-width: 1px;
+                    border-color: #666666;
+                    border-collapse: collapse;
+                    width:70%;
+                    margin:auto;
+                    margin-bottom: 10%;
+
+<span class="fc" id="L60">                &quot;&quot;&quot;),format.raw/*38.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*38.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L61">                &quot;&quot;&quot;),format.raw/*39.17*/(&quot;&quot;&quot;table.gridtable th &quot;&quot;&quot;),format.raw/*39.36*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*39.37*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L62">                    &quot;&quot;&quot;),format.raw/*40.21*/(&quot;&quot;&quot;border-width: 1px;</span>
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #c5464a;
+                    color: #FFFFFF;
+                    text-align: center;
+<span class="fc" id="L69">                &quot;&quot;&quot;),format.raw/*47.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*47.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L70">                &quot;&quot;&quot;),format.raw/*48.17*/(&quot;&quot;&quot;table.gridtable td &quot;&quot;&quot;),format.raw/*48.36*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*48.37*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L71">                    &quot;&quot;&quot;),format.raw/*49.21*/(&quot;&quot;&quot;border-width: 1px;</span>
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #ffffff;
+                    text-align: center;
+<span class="fc" id="L77">                &quot;&quot;&quot;),format.raw/*55.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*55.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L78">        &quot;&quot;&quot;),format.raw/*56.9*/(&quot;&quot;&quot;&lt;/style&gt;</span>
+
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;searchkey&quot;&gt; &lt;/div&gt;
+    &lt;div class = &quot;container&quot;&gt;
+    &lt;br&gt;
+<span class="fc" id="L85">    &lt;h2 style=&quot;color: #cc0000; text-align: center&quot;&gt;Search results for: &quot;&quot;&quot;),_display_(/*63.73*/keyword),format.raw/*63.80*/(&quot;&quot;&quot;&lt;/h2&gt;</span>
+
+
+
+            &lt;table class=&quot;gridtable&quot; id=&quot;table&quot;&gt;
+                &lt;tr&gt;
+                    &lt;th&gt;Title&lt;/th&gt;
+                    &lt;th&gt;Channel Name&lt;/th&gt;
+                    &lt;th&gt;Recent Videos&lt;/th&gt;
+                    &lt;th&gt;View Counts&lt;/th&gt;
+                    &lt;th&gt;Time lapsed&lt;/th&gt;
+                    &lt;th&gt;Sentiment&lt;/th&gt;
+                &lt;/tr&gt;
+                &lt;div id=&quot;videos&quot;&gt;&lt;/div&gt;
+
+<span class="fc" id="L100">&quot;&quot;&quot;),format.raw/*78.52*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L101">&quot;&quot;&quot;),format.raw/*79.123*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L102">&quot;&quot;&quot;),format.raw/*80.132*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L103">&quot;&quot;&quot;),format.raw/*81.56*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L104">&quot;&quot;&quot;),format.raw/*82.59*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L105">&quot;&quot;&quot;),format.raw/*83.51*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L106">&quot;&quot;&quot;),format.raw/*84.51*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L107">            &quot;&quot;&quot;),format.raw/*85.13*/(&quot;&quot;&quot;&lt;/table&gt;</span>
+
+
+    &lt;/div&gt;
+    &lt;/body&gt;
+
+    &lt;script type=&quot;text/javascript&quot;&gt;
+            let idList =[];
+            let videoList = [];
+            var websocket;
+            websocket = new WebSocket(&quot;ws://localhost:9000/ws&quot;);
+<span class="fc" id="L118">            websocket.onmessage = function processMessage(message)&quot;&quot;&quot;),format.raw/*96.67*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*96.68*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L119">                &quot;&quot;&quot;),format.raw/*97.17*/(&quot;&quot;&quot;var message = JSON.parse(message.data);</span>
+<span class="fc" id="L120">                if(idList.includes(message.videoId))&quot;&quot;&quot;),format.raw/*98.53*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*98.54*/(&quot;&quot;&quot;console.log(message)&quot;&quot;&quot;),format.raw/*98.74*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*98.75*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L121">                &quot;&quot;&quot;),format.raw/*99.17*/(&quot;&quot;&quot;else &quot;&quot;&quot;),format.raw/*99.22*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*99.23*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L122">                    &quot;&quot;&quot;),format.raw/*100.21*/(&quot;&quot;&quot;idList.push(message.videoId);</span>
+                    console.log(message);
+                    parseVideos(message);
+<span class="fc" id="L125">                &quot;&quot;&quot;),format.raw/*103.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*103.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L126">            &quot;&quot;&quot;),format.raw/*104.13*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*104.14*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L127">            &quot;&quot;&quot;),format.raw/*105.13*/(&quot;&quot;&quot;function sendMessage()&quot;&quot;&quot;),format.raw/*105.35*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*105.36*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L128">                &quot;&quot;&quot;),format.raw/*106.17*/(&quot;&quot;&quot;websocket.send(query.value);</span>
+                console.log(query.value);
+<span class="fc" id="L130">            &quot;&quot;&quot;),format.raw/*108.13*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*108.14*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L132">            &quot;&quot;&quot;),format.raw/*110.13*/(&quot;&quot;&quot;function parseVideos(message)&quot;&quot;&quot;),format.raw/*110.42*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*110.43*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L133">                &quot;&quot;&quot;),format.raw/*111.17*/(&quot;&quot;&quot;var tr=document.createElement(&quot;tr&quot;);</span>
+                var vtitle=document.createElement(&quot;td&quot;);
+                var ctitle=document.createElement(&quot;td&quot;);
+                var ctitle2=document.createElement(&quot;td&quot;);
+                var view = document.createElement(&quot;td&quot;);
+                var time=document.createElement(&quot;td&quot;);
+                var sentiment=document.createElement(&quot;td&quot;);
+
+                vtitle.innerHTML= '&lt;a href=&quot;http://localhost:9000/similar?videoId='+ message.videoId+'&quot;&gt;' + message.videoTitle + '&lt;/a&gt;';
+                ctitle.innerHTML='&lt;a href=&quot;http://localhost:9000/profile/'+ message.channelID +'&quot;&gt;' + message.channelTitle + '&lt;/a&gt;';
+                ctitle2.innerHTML='&lt;a href=&quot;http://localhost:9000/CVideos?channelID='+ message.channelID +'&amp;keyword='+message.query+'&quot;&gt;' + message.channelTitle + '&lt;/a&gt;';
+                view.innerHTML = message.viewCount;
+                time.innerHTML= message.timeAgo;
+                sentiment.innerHTML= message.sentiment;
+
+                var tab= document.getElementById(&quot;table&quot;);
+                tab.appendChild(tr);
+                tr.appendChild(vtitle);
+                tr.appendChild(ctitle);
+                tr.appendChild(ctitle2);
+                tr.appendChild(view);
+                tr.appendChild(time);
+                tr.appendChild(sentiment);
+
+<span class="fc" id="L157">            &quot;&quot;&quot;),format.raw/*135.13*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*135.14*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L158">    &quot;&quot;&quot;),format.raw/*136.5*/(&quot;&quot;&quot;&lt;/script&gt;</span>
+&quot;&quot;&quot;)))}))
+      }
+    }
+  }
+
+<span class="fc" id="L164">  def render(keyword:String,list:List[SearchingResults],assetsFinder:AssetsFinder): play.twirl.api.HtmlFormat.Appendable = apply(keyword,list)(assetsFinder)</span>
+
+<span class="nc" id="L166">  def f:((String,List[SearchingResults]) =&gt; (AssetsFinder) =&gt; play.twirl.api.HtmlFormat.Appendable) = (keyword,list) =&gt; (assetsFinder) =&gt; apply(keyword,list)(assetsFinder)</span>
+
+<span class="nc" id="L168">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  DATE: 2020-12-16T14:00:54.281460
+                  SOURCE: /Users/yuejunchen/Dropbox/SOEN6441/Assignment Two/app/views/search.scala.html
+                  HASH: 5c4f4aff3d652c08a688d8f26b83a9318427467c
+                  MATRIX: 610-&gt;134|675-&gt;193|1062-&gt;240|1241-&gt;326|1270-&gt;518|1298-&gt;520|1328-&gt;541|1368-&gt;543|1400-&gt;548|1485-&gt;605|1514-&gt;606|1563-&gt;627|1697-&gt;733|1726-&gt;734|1771-&gt;751|1803-&gt;755|1832-&gt;756|1881-&gt;777|1946-&gt;814|1975-&gt;815|2020-&gt;832|2064-&gt;848|2093-&gt;849|2142-&gt;870|2530-&gt;1230|2559-&gt;1231|2604-&gt;1248|2651-&gt;1267|2680-&gt;1268|2729-&gt;1289|3033-&gt;1565|3062-&gt;1566|3107-&gt;1583|3154-&gt;1602|3183-&gt;1603|3232-&gt;1624|3500-&gt;1864|3529-&gt;1865|3565-&gt;1874|3772-&gt;2054|3800-&gt;2061|4211-&gt;2495|4241-&gt;2618|4271-&gt;2750|4300-&gt;2806|4329-&gt;2865|4358-&gt;2916|4387-&gt;2967|4428-&gt;2980|4745-&gt;3269|4774-&gt;3270|4819-&gt;3287|4939-&gt;3379|4968-&gt;3380|5016-&gt;3400|5045-&gt;3401|5090-&gt;3418|5123-&gt;3423|5152-&gt;3424|5202-&gt;3445|5361-&gt;3575|5391-&gt;3576|5433-&gt;3589|5463-&gt;3590|5505-&gt;3603|5556-&gt;3625|5586-&gt;3626|5632-&gt;3643|5744-&gt;3726|5774-&gt;3727|5817-&gt;3741|5875-&gt;3770|5905-&gt;3771|5951-&gt;3788|7309-&gt;5117|7339-&gt;5118|7372-&gt;5123
+                  LINES: 23-&gt;5|24-&gt;6|29-&gt;7|34-&gt;8|36-&gt;14|37-&gt;15|37-&gt;15|37-&gt;15|38-&gt;16|40-&gt;18|40-&gt;18|41-&gt;19|44-&gt;22|44-&gt;22|45-&gt;23|45-&gt;23|45-&gt;23|46-&gt;24|48-&gt;26|48-&gt;26|49-&gt;27|49-&gt;27|49-&gt;27|50-&gt;28|60-&gt;38|60-&gt;38|61-&gt;39|61-&gt;39|61-&gt;39|62-&gt;40|69-&gt;47|69-&gt;47|70-&gt;48|70-&gt;48|70-&gt;48|71-&gt;49|77-&gt;55|77-&gt;55|78-&gt;56|85-&gt;63|85-&gt;63|100-&gt;78|101-&gt;79|102-&gt;80|103-&gt;81|104-&gt;82|105-&gt;83|106-&gt;84|107-&gt;85|118-&gt;96|118-&gt;96|119-&gt;97|120-&gt;98|120-&gt;98|120-&gt;98|120-&gt;98|121-&gt;99|121-&gt;99|121-&gt;99|122-&gt;100|125-&gt;103|125-&gt;103|126-&gt;104|126-&gt;104|127-&gt;105|127-&gt;105|127-&gt;105|128-&gt;106|130-&gt;108|130-&gt;108|132-&gt;110|132-&gt;110|132-&gt;110|133-&gt;111|157-&gt;135|157-&gt;135|158-&gt;136
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

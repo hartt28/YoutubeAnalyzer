@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentsActor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">Actors</a> &gt; <span class="el_source">CommentsActor.java</span></div><h1>CommentsActor.java</h1><pre class="source lang-java linenums">package Actors;
+/**
+ * Sample Java code for youtube.comments.list
+ * See instructions for running these code samples locally:
+ * https://developers.google.com/explorer-help/guides/code_samples#java
+ */
+
+import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.model.CommentThread;
+import com.google.api.services.youtube.model.CommentThreadListResponse;
+import com.vdurmont.emoji.EmojiManager;
+import com.vdurmont.emoji.EmojiParser;
+
+import java.io.IOException;
+import java.util.*;
+import static akka.pattern.Patterns.pipe;
+
+import java.util.concurrent.CompletableFuture;
+
+import static java.util.stream.Collectors.toList;
+
+/**
+ * @author Song Ke Xuan
+ */
+
+public class CommentsActor extends AbstractActor {
+
+    private ActorRef actorRef;
+    /**
+     * Api key
+     */
+    private static final String DEVELOPER_KEY = &quot;AIzaSyAVse9r8SI7lq2wKBh-PrsOIu83qad6ANo&quot;;
+    /**
+     *Total Comment Numbers
+     */
+    private static final long NUMBER_OF_COMMENTS_RETURNED = 100;
+    /**
+     * App Name
+     */
+    private static final String APPLICATION_NAME = &quot;API code samples&quot;;
+    /**
+     * initial Youtube api object
+     */
+<span class="fc" id="L51">    private static YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {</span>
+        public void initialize(HttpRequest request) throws IOException {
+<span class="fc" id="L53">        }</span>
+<span class="fc" id="L54">    }).setApplicationName(APPLICATION_NAME).build();</span>
+
+    /**
+     * String VideoId
+     */
+    private static String VideoId;
+    /**
+     * initial List
+     */
+
+<span class="fc" id="L64">    private List&lt;String&gt; commentsList = new ArrayList&lt;&gt;();</span>
+
+
+    /**
+     * Comment Thread list
+     */
+<span class="fc" id="L70">    List&lt;CommentThread&gt; searchCommentsList = null;</span>
+
+    public static Props getProps() {
+<span class="fc" id="L73">        System.out.println(&quot;CommentActor Start&quot;);</span>
+<span class="fc" id="L74">        return Props.create(CommentsActor.class);</span>
+    }
+
+    /**
+     * Constructor
+     */
+<span class="fc" id="L80">    public CommentsActor(){</span>
+<span class="fc" id="L81">    }</span>
+
+
+    /**
+     * get comments
+     * @param VideoId video is
+     * @return comments list
+     */
+    public List&lt;String&gt; getComments(String VideoId) throws IOException {
+
+
+<span class="fc" id="L92">        YouTube.CommentThreads.List comments = youtube.commentThreads()</span>
+<span class="fc" id="L93">                .list(&quot;snippet,replies&quot;);</span>
+        try {
+<span class="fc" id="L95">        CommentThreadListResponse response = comments.setKey(DEVELOPER_KEY)</span>
+<span class="fc" id="L96">                .setVideoId(VideoId)</span>
+<span class="fc" id="L97">                .setMaxResults(NUMBER_OF_COMMENTS_RETURNED)</span>
+<span class="fc" id="L98">                .execute();</span>
+
+<span class="fc" id="L100">        searchCommentsList = response.getItems();</span>
+
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        for (CommentThread c : searchCommentsList) {</span>
+<span class="fc" id="L104">            String comment = c.getSnippet().getTopLevelComment().getSnippet().getTextDisplay();</span>
+<span class="fc" id="L105">            commentsList.add(comment);</span>
+<span class="fc" id="L106">        }</span>
+<span class="fc" id="L107">            return commentsList;</span>
+
+<span class="fc" id="L109">        } catch (Exception e) {</span>
+<span class="fc" id="L110">            return(commentsList);</span>
+        }
+
+    }
+
+    /**
+     * search comments
+     * @param commentsList list of comment
+     * @return emoji
+     */
+    public String SearchComment(List&lt;String&gt; commentsList){
+<span class="fc" id="L121">        String error = &quot;No Comment&quot;;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if(commentsList.size() == 0){return error;}</span>
+        else {
+
+<span class="fc" id="L125">            List&lt;String&gt; emojiList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L127" title="All 2 branches covered.">            for (String comment : commentsList) {</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">                if (EmojiManager.containsEmoji(comment) == true) {</span>
+<span class="fc" id="L129">                    List&lt;String&gt; emoji = EmojiParser.extractEmojis(comment);</span>
+<span class="fc" id="L130">                    List&lt;String&gt; emojiPro = emoji.stream().map(e -&gt; {</span>
+<span class="fc" id="L131">                        e.replace(&quot;[&quot;, &quot;&quot;);</span>
+<span class="fc" id="L132">                        e.replace(&quot;]&quot;, &quot;&quot;);</span>
+<span class="fc" id="L133">                        e.split(&quot;,&quot;);</span>
+<span class="fc" id="L134">                        return e;</span>
+                    })
+<span class="fc" id="L136">                            .distinct().collect(toList());</span>
+<span class="fc" id="L137">                    emojiList.add(emojiPro.toString());</span>
+                }
+
+<span class="fc" id="L140">            }</span>
+
+
+<span class="fc" id="L143">            List&lt;String&gt; happyEmo = Arrays.asList(&quot;\uD83D\uDE00&quot;, &quot;\uD83D\uDE01&quot;, &quot;\uD83D\uDE02&quot;, &quot;\uD83E\uDD23&quot;, &quot;\uD83D\uDE03&quot;</span>
+                    , &quot;\uD83D\uDE04&quot;, &quot;\uD83D\uDE05&quot;, &quot;\uD83D\uDE06&quot;, &quot;\uD83D\uDE09&quot;, &quot;\uD83D\uDE0A&quot;, &quot;\uD83D\uDE0B&quot;, &quot;\uD83D\uDE0E&quot;
+                    , &quot;\uD83D\uDE0D&quot;, &quot;\uD83D\uDE18&quot;, &quot;\uD83E\uDD70&quot;, &quot;\uD83D\uDE17&quot;, &quot;\uD83D\uDE19&quot;, &quot;\uD83D\uDE1A&quot;, &quot;\u263A\uFE0F&quot;
+                    , &quot;\uD83D\uDE42&quot;, &quot;\uD83E\uDD17&quot;, &quot;\uD83E\uDD29&quot;, &quot;\uD83D\uDE3A&quot;, &quot;\uD83D\uDE38&quot;, &quot;\uD83D\uDE39&quot;, &quot;\uD83D\uDE3B&quot;
+                    , &quot;\uD83D\uDE3D&quot;, &quot;\uD83D\uDC98&quot;, &quot;\u2665\uFE0F&quot;, &quot;\uD83D\uDC93&quot;, &quot;\uD83D\uDC95&quot;, &quot;\uD83D\uDC96&quot;, &quot;\uD83D\uDC97&quot;
+                    , &quot;\uD83D\uDD25&quot;, &quot;\uD83C\uDF89&quot;, &quot;\uD83E\uDD18&quot;, &quot;\uD83D\uDCAF&quot;, &quot;\uD83D\uDC4F&quot;, &quot;\uD83D\uDC4C&quot;, &quot;\uD83D\uDC4D&quot;
+                    , &quot;\uD83D\uDCAA&quot;, &quot;\u270C\uFE0F&quot;
+            );
+
+<span class="fc" id="L152">            List&lt;String&gt; sadEmo = Arrays.asList(</span>
+                    &quot;\u2639\uFE0F&quot;, &quot;\uD83D\uDE41&quot;, &quot;\uD83D\uDE16&quot;, &quot;\uD83D\uDE1E&quot;, &quot;\uD83D\uDE1F&quot;, &quot;\uD83D\uDE24&quot;, &quot;\uD83D\uDE22&quot;, &quot;\uD83D\uDE2D&quot;
+                    , &quot;\uD83D\uDE26&quot;, &quot;\uD83D\uDE27&quot;, &quot;\uD83D\uDE28&quot;, &quot;\uD83D\uDE29&quot;,
+                    &quot;\uD83E\uDD2F&quot;, &quot;\uD83D\uDE2C&quot;, &quot;\uD83D\uDE30&quot;, &quot;\uD83D\uDE31&quot;, &quot;\uD83E\uDD75&quot;
+                    , &quot;\uD83E\uDD76&quot;, &quot;\uD83D\uDE33&quot;, &quot;\uD83D\uDE35&quot;, &quot;\uD83D\uDE21&quot;, &quot;\uD83D\uDE20&quot;, &quot;\uD83E\uDD2C&quot;, &quot;\uD83E\uDD2E&quot;
+                    , &quot;\uD83D\uDE37&quot;, &quot;\uD83E\uDD27&quot;, &quot;\uD83D\uDC7F&quot;, &quot;\uD83D\uDE3F&quot;, &quot;\uD83D\uDE40&quot;, &quot;\uD83D\uDC4E&quot;, &quot;\uD83D\uDC47&quot;
+            );
+
+
+<span class="fc" id="L161">            List&lt;String&gt; happy = emojiList.stream()</span>
+<span class="fc" id="L162">                    .map(e -&gt; e.replace(&quot;[&quot;, &quot;&quot;).replace(&quot;]&quot;, &quot;&quot;))</span>
+<span class="fc" id="L163">                    .filter(w1 -&gt; happyEmo.stream().anyMatch(w2 -&gt; w1.contains(w2)))</span>
+<span class="fc" id="L164">                    .collect(toList());</span>
+
+<span class="fc" id="L166">            List&lt;String&gt; sad = emojiList.stream()</span>
+<span class="fc" id="L167">                    .map(e -&gt; e.replace(&quot;[&quot;, &quot;&quot;).replace(&quot;]&quot;, &quot;&quot;))</span>
+<span class="fc" id="L168">                    .filter(w1 -&gt; sadEmo.stream().anyMatch(w2 -&gt; w1.contains(w2)))</span>
+<span class="fc" id="L169">                    .collect(toList());</span>
+
+
+<span class="fc" id="L172">            int criteria = (int) (emojiList.size() * 0.7);</span>
+
+<span class="fc bfc" id="L174" title="All 2 branches covered.">            if (happy.size() &gt;= criteria) {</span>
+<span class="fc" id="L175">                return (&quot;\uD83D\uDC4D&quot;);</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">            } else if (sad.size() &gt;= criteria) {</span>
+<span class="nc" id="L177">                return (&quot;\uD83D\uDC4E&quot;);</span>
+            } else {
+<span class="fc" id="L179">                return (&quot;\uD83D\uDE10&quot;);</span>
+            }
+        }
+    }
+
+    /**
+     * Use async function to get comments
+     * @param videoId video id
+     * @return sentiment
+     */
+
+    public CompletableFuture&lt;String&gt; future(String videoId){
+<span class="fc" id="L191">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+            try {
+<span class="fc" id="L193">                return getComments(videoId);</span>
+<span class="nc" id="L194">            } catch (IOException e) {</span>
+<span class="nc" id="L195">                e.printStackTrace();</span>
+            }
+<span class="nc" id="L197">            return commentsList;</span>
+<span class="fc" id="L198">        }).thenApplyAsync(commentsList -&gt; {</span>
+<span class="fc" id="L199">           String sentiment = SearchComment(commentsList);</span>
+<span class="fc" id="L200">           return sentiment;</span>
+        });
+
+
+    }
+
+    /**
+     * handling incoming message
+     * @return sentiment with pipe
+     */
+    @Override
+    public Receive createReceive() {
+<span class="fc" id="L212">        return receiveBuilder()</span>
+<span class="fc" id="L213">                .match(SearchActor.commentMessage.class, msg -&gt; {</span>
+
+<span class="fc" id="L215">                    CompletableFuture&lt;String&gt; sentiment = future(msg.getVideoId());</span>
+<span class="fc" id="L216">                    actorRef = getSender();</span>
+<span class="fc" id="L217">                    pipe(sentiment,getContext().dispatcher()).to(actorRef);</span>
+
+<span class="fc" id="L219">        }).build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

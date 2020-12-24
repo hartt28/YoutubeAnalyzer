@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AsynProcessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">services</a> &gt; <span class="el_source">AsynProcessor.java</span></div><h1>AsynProcessor.java</h1><pre class="source lang-java linenums">package services;
+
+
+import Actors.Supervisor;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
+import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.model.*;
+
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.GeneralSecurityException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import models.ProfileImp;
+import models.SearchingResults;
+import models.Videos;
+import play.libs.ws.WSResponse;
+
+import javax.inject.Inject;
+
+import static java.util.Comparator.comparing;
+
+/**
+ * Api Service
+ * @author Chenwen Wang, Kexuan Song, Geer Jiang, Yuejun Chen
+ */
+public class AsynProcessor {
+
+    /**
+     * default constructor
+     */
+
+<span class="fc" id="L45">    public AsynProcessor() {</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * initial youtube object
+     */
+<span class="fc" id="L51">    private static YouTube youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {</span>
+        public void initialize(HttpRequest request) throws IOException {
+<span class="fc" id="L53">        }</span>
+<span class="fc" id="L54">    }).setApplicationName(&quot;example&quot;).build();</span>
+
+    /**
+     * Number of video return
+     */
+    private static final long NUMBER_OF_VIDEOS_RETURNED =10;
+    /**
+     * Number of similar video return
+     */
+    private static final long NUMBER_OF_similarVIDEOS_RETURNED = 100;
+
+    /**
+     * Api key
+     */
+    private static final String APIKey = &quot;AIzaSyAVse9r8SI7lq2wKBh-PrsOIu83qad6ANo&quot;;
+    /**
+     * Video list
+     */
+<span class="fc" id="L72">    private List&lt;Videos&gt; list = new ArrayList&lt;&gt;();</span>
+    /**
+     * Video list
+     */
+<span class="fc" id="L76">    private List&lt;Videos&gt; similarList = new ArrayList&lt;&gt;();</span>
+    /**
+     * Channel list
+     */
+<span class="fc" id="L80">    List&lt;Channel&gt; channelSearchList = null;</span>
+    /**
+     * Search Channel List
+     */
+<span class="fc" id="L84">    List&lt;SearchResult&gt; searchResultList = null;</span>
+    /**
+     * playlist items list
+     */
+<span class="fc" id="L88">    List&lt;PlaylistItem&gt; playlistItems = null;</span>
+    /**
+     * similar videos list
+     */
+<span class="fc" id="L92">    List&lt;SearchResult&gt; searchSimilarResultList = null;</span>
+    /**
+     * key
+     */
+<span class="fc" id="L96">    String key = &quot;&quot;;</span>
+    //private  List&lt;Videos&gt; cvList = new ArrayList&lt;&gt;();
+    /**
+     * channel video list
+     */
+<span class="fc" id="L101">    private List&lt;SearchingResults&gt; VideoList = new ArrayList&lt;&gt;();</span>
+
+    private ActorRef supervisor;
+
+
+//    public CompletionStage&lt;WSResponse&gt; webSocketSearch(String query) throws IOException {
+//        YouTube.Search.List search = youtube.search().list(&quot;id,snippet&quot;);
+//        search.setType(&quot;video&quot;);
+//        search.setKey(APIKey);
+//        search.setOrder(&quot;date&quot;);
+//        search.setQ(query);
+//
+//        SearchListResponse searchResponse = search.execute();
+//
+//    }
+
+
+    /**
+     * Process search with YouTube api
+     *
+     * @param queryTerm search key
+     * @return searchResult list
+     * @author Chenwen
+     */
+    public List&lt;SearchResult&gt; searchVideo(String queryTerm) {
+
+        try {
+            // This object is used to make YouTube Data API requests. The last
+            // argument is required, but since we don't need anything
+            // initialized when the HttpRequest is initialized, we override
+            // the interface and provide a no-op function.
+
+            // Prompt the user to enter a query term.
+
+            // Define the API request for retrieving search results.
+<span class="fc" id="L136">            YouTube.Search.List search = youtube.search().list(&quot;id,snippet&quot;);</span>
+
+            // Set your developer key from the {{ Google Cloud Console }} for
+            // non-authenticated requests. See:
+            // {{ https://cloud.google.com/console }}
+<span class="fc" id="L141">            search.setType(&quot;video&quot;);</span>
+<span class="fc" id="L142">            search.setKey(APIKey);</span>
+<span class="fc" id="L143">            search.setOrder(&quot;date&quot;);</span>
+<span class="fc" id="L144">            search.setQ(queryTerm);</span>
+
+            // Restrict the search results to only include videos. See:
+            // https://developers.google.com/youtube/v3/docs/search/list#type
+
+            // To increase efficiency, only retrieve the fields that the
+            // application uses.
+<span class="fc" id="L151">            search.setFields(&quot;items(id/kind,id/videoId,snippet/channelId,snippet/title,snippet/channelTitle,snippet/publishedAt)&quot;);</span>
+<span class="fc" id="L152">            search.setOrder(&quot;date&quot;);</span>
+<span class="fc" id="L153">            search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);</span>
+            // Call the API and print results.
+<span class="fc" id="L155">            SearchListResponse searchResponse = search.execute();</span>
+
+
+<span class="fc" id="L158">            searchResultList = searchResponse.getItems();</span>
+
+            //save key
+<span class="fc" id="L161">            key = queryTerm;</span>
+
+
+<span class="fc" id="L164">        } catch (IOException e) {</span>
+<span class="fc" id="L165">            e.printStackTrace();</span>
+<span class="fc" id="L166">        }</span>
+
+<span class="fc" id="L168">        return searchResultList;</span>
+    }
+
+//    public CompletionStage&lt;List&lt;SearchingResults&gt;&gt; webSocketSearch(String key) {
+//        return CompletableFuture.supplyAsync(()-&gt; searchVideo(key)).thenApplyAsync(searchResultList -&gt;{
+//            searchResultList.forEach(searchResults -&gt;{
+//                String videoId = searchResults.getId().getVideoId();
+//                String channelId = searchResults.getSnippet().getChannelId();
+//                Comments comments = new Comments(videoId);
+//                try {
+//                   String channelName = getChannelInfo(channelId).get(0).getSnippet().getTitle();
+//                    String sentiment = comments.SearchComment(comments.getComments(videoId));
+//                    String videoTitle = searchResults.getSnippet().getTitle();
+//                    Long date = Calendar.getInstance().getTimeInMillis();
+//                    Long dateTime = (date - searchResults.getSnippet().getPublishedAt().getValue()) / 1000 / 60;
+//                    SearchingResults searchingResults = new SearchingResults(videoTitle,channelName,dateTime,sentiment,videoId);
+//                    VideoList.add(searchingResults);
+//                } catch (GeneralSecurityException | IOException e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//
+//            return VideoList;
+//        });
+//    }
+
+    /**
+     * Process searching action with Asynchronous
+     * @author Chenwen
+     * @param searchKey query term
+     * @return video list
+     */
+    public CompletableFuture&lt;List&lt;SearchingResults&gt;&gt; processSearchAsync(String searchKey) {
+<span class="fc" id="L201">        return CompletableFuture.supplyAsync(() -&gt; searchVideo(searchKey))</span>
+<span class="fc" id="L202">                .thenApplyAsync(list -&gt;{</span>
+<span class="fc" id="L203">                            list.forEach(searchResults -&gt;{</span>
+<span class="fc" id="L204">                                String videoId = searchResults.getId().getVideoId();</span>
+<span class="fc" id="L205">                                String channelId = searchResults.getSnippet().getChannelId();</span>
+<span class="fc" id="L206">                                String query = searchKey;</span>
+                                try {
+<span class="fc" id="L208">                                    String channelName = getChannelInfo(channelId).get(0).getSnippet().getTitle();</span>
+<span class="fc" id="L209">                                    String videoTitle = searchResults.getSnippet().getTitle();</span>
+<span class="fc" id="L210">                                    Long date = Calendar.getInstance().getTimeInMillis();</span>
+<span class="fc" id="L211">                                    BigInteger viewCount = getVideoView(videoId);</span>
+<span class="fc" id="L212">                                    Long dateTime = (date - searchResults.getSnippet().getPublishedAt().getValue()) / 1000 / 60;</span>
+<span class="fc" id="L213">                                    SearchingResults searchingResults = new SearchingResults(videoTitle,channelName,dateTime,viewCount,videoId,channelId,query);</span>
+<span class="fc" id="L214">                                    VideoList.add(searchingResults);</span>
+<span class="fc" id="L215">                                } catch (GeneralSecurityException | IOException e) {</span>
+<span class="fc" id="L216">                                    e.printStackTrace();</span>
+<span class="fc" id="L217">                                }</span>
+<span class="fc" id="L218">                            });</span>
+
+<span class="fc" id="L220">                            return VideoList;</span>
+                });
+
+    }
+
+//    /**
+//     * Get wrapped in Videos model and save into list
+//     *
+//     * @param searchResult YouTube.searchResult object
+//     * @param videoName    video name
+//     * @param videoId      video id
+//     * @param c            comment object
+//     * @param videoImp     video object
+//     * @param list         return list
+//     * @throws throw IOException
+//     * @author Chenwen
+//     */
+//
+//    public static void GetSearchInfo(SearchResult searchResult, String videoName, String videoId, Comments c, VideoImp videoImp, List&lt;Videos&gt; list) throws IOException {
+//        String ChannelTitle = searchResult.getSnippet().getChannelTitle();
+//        String channelID = searchResult.getSnippet().getChannelId();
+//        Long date = Calendar.getInstance().getTimeInMillis();
+//        Long dateTime = (date - searchResult.getSnippet().getPublishedAt().getValue()) / 1000 / 60;
+//
+//
+//        String sentiment = c.SearchComment(c.getComments(videoId));
+//        BigInteger viewCount = videoImp.getVideoView(videoId);
+//
+//        Videos video = new Videos(videoName, videoId, ChannelTitle, channelID, viewCount, dateTime, sentiment);
+//        list.add(video);
+//    }
+
+    /**
+     * Get Channel information from YouTube API
+     *
+     * @param ChannelId channel id
+     * @return Channel list , but only get 1 value
+     * @throws throw GeneralSecurityException
+     * @throws throw IOException
+     * @author Chenwen
+     */
+
+    public List&lt;Channel&gt; getChannelInfo(String ChannelId) throws GeneralSecurityException, IOException {
+
+<span class="fc" id="L264">        YouTube.Channels.List search = youtube.channels().list(&quot;snippet,contentDetails,statistics&quot;);</span>
+<span class="fc" id="L265">        search.setKey(APIKey);</span>
+<span class="fc" id="L266">        search.setId(ChannelId);</span>
+<span class="fc" id="L267">        ChannelListResponse channelListResponse = search.execute();</span>
+
+        //System.out.println(youtube.getServicePath());
+<span class="fc" id="L270">        channelSearchList = channelListResponse.getItems();</span>
+
+
+<span class="fc" id="L273">        return channelSearchList;</span>
+
+    }
+
+    /**
+     * Profile Async function for HomeController
+     *
+     * @param ChannelId channel id
+     * @return Wrapped with Profile Object
+     * @throws throw GeneralSecurityException
+     * @throws throw IOException
+     * @author Chenwen
+     */
+
+    public CompletableFuture&lt;ProfileImp&gt; processProfileAsync(String ChannelId) throws GeneralSecurityException, IOException {
+<span class="fc" id="L288">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+            try {
+<span class="fc" id="L290">                return getChannelInfo(ChannelId);</span>
+<span class="fc" id="L291">            } catch (GeneralSecurityException | IOException e) {</span>
+<span class="fc" id="L292">                e.printStackTrace();</span>
+            }
+<span class="fc" id="L294">            return channelSearchList;</span>
+<span class="fc" id="L295">        }).thenApplyAsync(channelSearchList -&gt; {</span>
+
+<span class="fc" id="L297">            Channel channel = channelSearchList.get(0);</span>
+<span class="fc" id="L298">            String title = channel.getSnippet().getTitle();</span>
+<span class="fc" id="L299">            String description = channel.getSnippet().getDescription();</span>
+<span class="pc bpc" id="L300" title="1 of 2 branches missed.">            if (description ==null){ description = &quot;Disable to get Description&quot;; }</span>
+<span class="fc" id="L301">            DateTime publishedAt = channel.getSnippet().getPublishedAt();</span>
+<span class="fc" id="L302">            String country = channel.getSnippet().getCountry();</span>
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">            if (country == null){ country = &quot;Disable to get Location&quot;;}</span>
+
+<span class="fc" id="L305">            String url = channel.getSnippet().getThumbnails().getDefault().getUrl();</span>
+
+<span class="fc" id="L307">            BigInteger totalViews = channel.getStatistics().getViewCount();</span>
+<span class="fc" id="L308">            BigInteger totalSubscribers = channel.getStatistics().getSubscriberCount();</span>
+<span class="fc" id="L309">            BigInteger totVideos = channel.getStatistics().getVideoCount();</span>
+
+<span class="fc" id="L311">            return new ProfileImp(title, description, totalViews, totalSubscribers, totVideos, publishedAt, country, url);</span>
+        });
+
+    }
+
+
+    /**
+     * Get similar videos information from YouTube API
+     *
+     * @param videoId search keyword
+     * @return searchSimilarResultList
+     * @throws throw IOException
+     * @author Geer Jiang
+     */
+
+    public List&lt;SearchResult&gt; searchSimilar(String videoId) throws IOException {
+
+        try {
+<span class="fc" id="L329">            YouTube.Search.List search = youtube.search().list(&quot;id,snippet&quot;);</span>
+<span class="fc" id="L330">            search.setType(&quot;video&quot;);</span>
+<span class="fc" id="L331">            search.setKey(APIKey);</span>
+<span class="fc" id="L332">            search.setRelatedToVideoId(videoId);</span>
+<span class="fc" id="L333">            search.setFields(&quot;items(id/videoId,snippet/title)&quot;);</span>
+<span class="fc" id="L334">            search.setMaxResults(NUMBER_OF_similarVIDEOS_RETURNED);</span>
+            // Call the API and print results.
+<span class="fc" id="L336">            SearchListResponse searchSimilarResponse = search.execute();</span>
+<span class="fc" id="L337">            searchSimilarResultList = searchSimilarResponse.getItems();</span>
+<span class="fc" id="L338">            int size = searchSimilarResultList.size();</span>
+            //System.out.println(size);
+
+<span class="fc" id="L341">        } catch (IOException e) {</span>
+<span class="fc" id="L342">            e.printStackTrace();</span>
+<span class="fc" id="L343">        }</span>
+<span class="fc" id="L344">        return searchSimilarResultList;</span>
+
+    }
+
+    /**
+     * Get similar videos information list
+     *
+     * @param videoId search key
+     * @return similarList
+     * @author Geer Jiang
+     */
+    public CompletableFuture&lt;List&lt;String&gt;&gt; similarSearchAsync(String videoId) {
+<span class="fc" id="L356">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+            try {
+<span class="fc" id="L358">                return searchSimilar(videoId);</span>
+<span class="nc" id="L359">            } catch (IOException e) {</span>
+<span class="nc" id="L360">                e.printStackTrace();</span>
+            }
+<span class="nc" id="L362">            return null;</span>
+        })
+<span class="fc" id="L364">                .thenApplyAsync(searchSimilarResultList -&gt; {</span>
+<span class="fc" id="L365">                            searchSimilarResultList.forEach(searchSimilar -&gt; {</span>
+<span class="fc" id="L366">                                        String videoTitle = searchSimilar.getSnippet().getTitle();</span>
+<span class="fc" id="L367">                                        getSimilar(searchSimilar, videoTitle, similarList);</span>
+<span class="fc" id="L368">                                    }</span>
+                            );
+<span class="fc" id="L370">                    String listString = similarList.stream().map(Videos::getVideoTitle)</span>
+<span class="fc" id="L371">                            .collect(Collectors.joining(&quot;, &quot;));</span>
+<span class="fc" id="L372">                    String[] similarWords = listString.replaceAll(&quot;[^a-zA-Z ]&quot;, &quot;&quot;).toLowerCase().split(&quot;\\s+&quot;);</span>
+                    //System.out.println(listString);
+<span class="fc" id="L374">                    List&lt;String&gt; similarWordList = Stream.of(similarWords).map(w -&gt; w.split(&quot;\\s+&quot;)).flatMap(Arrays::stream)</span>
+<span class="fc" id="L375">                            .collect(Collectors.toList());</span>
+                    //System.out.println(similarWordList);
+
+<span class="fc" id="L378">                    Map&lt;String, Integer&gt; unsortMap = similarWordList.stream()</span>
+<span class="fc" id="L379">                            .collect(Collectors.toMap(w -&gt; w.toLowerCase(), w -&gt; 1, Integer::sum));</span>
+<span class="fc" id="L380">                    Map&lt;String, Integer&gt; sortedMap = unsortMap.entrySet().stream()</span>
+<span class="fc" id="L381">                            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))</span>
+<span class="fc" id="L382">                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,</span>
+<span class="nc" id="L383">                                    (oldValue, newValue) -&gt; oldValue, LinkedHashMap::new));</span>
+<span class="fc" id="L384">                    List&lt;String&gt; sortedList = new ArrayList&lt;String&gt;(sortedMap.keySet());</span>
+
+                    //System.out.println(sortedList);
+<span class="fc" id="L387">                            return sortedList;</span>
+                        }
+                );
+    }
+
+    /**
+     * Get similar videos information list
+     *
+     * @param searchSimilar search key
+     * @param videoTitle    video title
+     * @param similarList   similar video list
+     * @author Geer Jiang
+     */
+    public static void getSimilar(SearchResult searchSimilar, String videoTitle, List&lt;Videos&gt; similarList) {
+<span class="fc" id="L401">        Videos similarVideo = new Videos(videoTitle);</span>
+<span class="fc" id="L402">        similarList.add(similarVideo);</span>
+<span class="fc" id="L403">    }</span>
+
+
+    /**
+     * Get ten videos from upload playlist from YouTube API
+     *
+     * @param ChannelId playlist id
+     * @return playlist items list
+     * @throws throw IOException
+     * @author Chen Yuejun
+     */
+
+    public List&lt;PlaylistItem&gt; getPlaylistItems(String ChannelId) throws IOException, GeneralSecurityException {
+<span class="fc" id="L416">        List&lt;Channel&gt; requiredInfo = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L417">        requiredInfo = getChannelInfo(ChannelId);</span>
+<span class="fc" id="L418">        Channel channel = channelSearchList.get(0);</span>
+<span class="fc" id="L419">        YouTube.PlaylistItems.List request = youtube.playlistItems()</span>
+<span class="fc" id="L420">                .list(&quot;snippet,contentDetails&quot;);</span>
+<span class="fc" id="L421">        String uploadId = channel.getContentDetails().getRelatedPlaylists().getUploads();</span>
+<span class="fc" id="L422">        request.setPlaylistId(uploadId);</span>
+<span class="fc" id="L423">        request.setKey(APIKey);</span>
+<span class="fc" id="L424">        request.setFields(&quot;items(contentDetails/videoId,snippet/channelId,snippet/title,snippet/publishedAt,snippet/description)&quot;);</span>
+<span class="fc" id="L425">        PlaylistItemListResponse response = request.setMaxResults(NUMBER_OF_VIDEOS_RETURNED)</span>
+<span class="fc" id="L426">                .execute();</span>
+<span class="fc" id="L427">        playlistItems = response.getItems();</span>
+<span class="fc" id="L428">        return playlistItems;</span>
+    }
+
+
+    /**
+     * Process search videos of channel action with Asynchronous
+     *
+     * @param ChannelId channel id
+     * @param keyword   query term
+     * @return video list
+     * @author Chen Yuejun
+     */
+    public CompletableFuture&lt;List&lt;Videos&gt;&gt; processPlayListAsync(String ChannelId, String keyword) throws GeneralSecurityException, IOException, ParseException {
+<span class="fc" id="L441">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+            try {
+<span class="fc" id="L443">                return getPlaylistItems(ChannelId);</span>
+<span class="fc" id="L444">            } catch (GeneralSecurityException | IOException e) {</span>
+<span class="fc" id="L445">                e.printStackTrace();</span>
+            }
+<span class="fc" id="L447">            return playlistItems;</span>
+<span class="fc" id="L448">        }).thenApplyAsync(playlistItems -&gt; {</span>
+<span class="fc" id="L449">            List&lt;Videos&gt; cvList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L450">            playlistItems.forEach(p -&gt; {</span>
+<span class="fc" id="L451">                        String videoName = p.getSnippet().getTitle();</span>
+<span class="fc" id="L452">                        DateTime datetime = p.getSnippet().getPublishedAt();</span>
+<span class="fc" id="L453">                        Date date = new Date(p.getSnippet().getPublishedAt().getValue());</span>
+                        try {
+<span class="fc" id="L455">                            GetVideoInfo(p, videoName, datetime, date, keyword, cvList);</span>
+<span class="nc" id="L456">                        } catch (IOException | ParseException e) {</span>
+<span class="nc" id="L457">                            e.printStackTrace();</span>
+<span class="fc" id="L458">                        }</span>
+<span class="fc" id="L459">                    }</span>
+            );
+            //            channelVideoList = cvList.stream().sorted(comparing(Videos::getIntDate)).collect(Collectors.toList());
+
+<span class="fc" id="L463">            Map&lt;Integer, List&lt;Videos&gt;&gt; videolistGrouped = cvList.stream()</span>
+<span class="fc" id="L464">                    .collect(Collectors.groupingBy(Videos::getIntDate, Collectors.toList()));</span>
+
+            //then sort groups by date in each of them
+<span class="fc" id="L467">            List&lt;Videos&gt; sorted = videolistGrouped.entrySet().stream()</span>
+<span class="fc" id="L468">                    .sorted(Comparator.comparing(e -&gt; e.getValue().stream().map(Videos::getIntDate).min(Comparator.naturalOrder()).orElse(0)))</span>
+                    //and also sort each group by search key before collecting them in one list
+<span class="pc" id="L470">                    .flatMap(e -&gt; e.getValue().stream().sorted(Comparator.comparing(v -&gt; v.getOccurenceTimesInTitle(keyword)))).collect(Collectors.toList());</span>
+
+<span class="fc" id="L472">            return sorted;</span>
+
+        });
+    }
+
+    /**
+     * Get wrapped in Videos model and save into list
+     *
+     * @param p         YouTube.searchResult object
+     * @param videoName video name
+     * @param dateTime  DateTime object
+     * @param date      Date object
+     * @param keyword   String object
+     * @throws throw IOException,ParseException
+     * @author Chen Yuejun
+     */
+
+    public static void GetVideoInfo(PlaylistItem p, String videoName, DateTime dateTime, Date date, String keyword, List&lt;Videos&gt; cvList) throws IOException, ParseException {
+<span class="fc" id="L490">        String channelTitle = p.getSnippet().getChannelTitle();</span>
+<span class="fc" id="L491">        String pattern = &quot;yyyy-MM-dd&quot;;</span>
+<span class="fc" id="L492">        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);</span>
+        //get string date as yyyy-MM-dd
+<span class="fc" id="L494">        String ndate = simpleDateFormat.format(date);</span>
+<span class="fc" id="L495">        SimpleDateFormat sdformat = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</span>
+<span class="fc" id="L496">        Date d = sdformat.parse(ndate);</span>
+<span class="fc" id="L497">        Videos video = new Videos(channelTitle, videoName, d, ndate);</span>
+<span class="fc" id="L498">        cvList.add(video);</span>
+<span class="fc" id="L499">    }</span>
+
+    /**
+     * get views of video
+     * @param videoId video id
+     * @return viewTotal
+     * @author Chenwen Wang
+     */
+    public BigInteger getVideoView(String videoId) throws IOException {
+        //videoList
+<span class="fc" id="L509">        List&lt;Video&gt; videoList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L510">        YouTube youTube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {</span>
+            @Override
+            public void initialize(HttpRequest request) throws IOException {
+<span class="fc" id="L513">            }</span>
+<span class="fc" id="L514">        }).setApplicationName(&quot;Channel&quot;).build();</span>
+
+<span class="fc" id="L516">        YouTube.Videos.List search = youTube.videos().list(&quot;statistics&quot;);</span>
+<span class="fc" id="L517">        search.setKey(APIKey);</span>
+
+<span class="fc" id="L519">        VideoListResponse videoListResponse = search.setId(videoId).execute();</span>
+<span class="fc" id="L520">        videoList = videoListResponse.getItems();</span>
+
+<span class="fc" id="L522">        BigInteger viewTotal = videoList.get(0).getStatistics().getViewCount();</span>
+
+<span class="fc" id="L524">        return viewTotal;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

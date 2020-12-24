@@ -1,0 +1,96 @@
+[0m[[0m[0mdebug[0m] [0m[0mjavaOptions: Vector(-Djacoco-agent.destfile=/Users/yuejunchen/Dropbox/SOEN6441/Assignment Two/target/scala-2.13/jacoco/data/jacoco.exec, -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9998, -Xms512M, -Xmx1536M, -Xss1M, -XX:MaxPermSize=384M)[0m
+[0m[[0m[0mdebug[0m] [0m[0mForking tests - parallelism = false[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreate a single-thread test executor[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunner for com.novocode.junit.JUnitFramework produced 11 initial tasks for 11 tests.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(models.TestVideo, sbt.ForkMain$AnnotatedFingerscan@3172e97b, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest models.[33mTestVideo[0m.[36minitialVideos[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest models.[33mTestVideo[0m.[36minitialVideos[0m finished, took 0.066 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 1 total, 0.076s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(actors.SearchActorTest, sbt.ForkMain$AnnotatedFingerscan@546581c8, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest actors.[33mSearchActorTest[0m.[36mtestSearch[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest actors.[33mSearchActorTest[0m.[36mtestSearch[0m finished, took 3.189 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 1 total, 3.192s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(models.TestProfile, sbt.ForkMain$AnnotatedFingerscan@8dc927f, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest models.[33mTestProfile[0m.[36minitialAndGetter[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest models.[33mTestProfile[0m.[36minitialAndGetter[0m finished, took 0.015 sec[0m
+[0m[[0m[0minfo[0m] [0m[0mTest models.[33mTestProfile[0m.[36mTestGetChannelInfo[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest models.[33mTestProfile[0m.[36mTestGetChannelInfo[0m finished, took 2.386 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 2 total, 2.408s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 2 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(UnitTest, sbt.ForkMain$AnnotatedFingerscan@69e98cd3, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest [33mUnitTest[0m.[36mtest[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest [33mUnitTest[0m.[36mtest[0m finished, took 0.002 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 1 total, 0.004s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(Service.YouTubeApiTest, sbt.ForkMain$AnnotatedFingerscan@458c4691, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest Service.[33mYouTubeApiTest[0m.[36mtestMockList[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest Service.[33mYouTubeApiTest[0m.[36mtestMockList[0m finished, took 0.016 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 1 total, 0.02s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(models.TestGetComments, sbt.ForkMain$AnnotatedFingerscan@1ac58edb, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest models.[33mTestGetComments[0m.[36mTestGetComments[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest models.[33mTestGetComments[0m.[36mTestGetComments[0m finished, took 0.975 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 1 total, 0.981s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(actors.ProfileActorTest, sbt.ForkMain$AnnotatedFingerscan@21184795, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest actors.[33mProfileActorTest[0m.[36mTest[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest actors.[33mProfileActorTest[0m.[36mTest[0m finished, took 2.55 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 1 total, 2.551s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(models.TestSearchingResults, sbt.ForkMain$AnnotatedFingerscan@3c8035a5, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest models.[33mTestSearchingResults[0m.[36minitialSearchingResults[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest models.[33mTestSearchingResults[0m.[36minitialSearchingResults[0m finished, took 0.001 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 1 total, 0.001s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(models.TestChannelVideos, sbt.ForkMain$AnnotatedFingerscan@33fdfb68, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest models.[33mTestChannelVideos[0m.[36mchannelVideosTest1[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest models.[33mTestChannelVideos[0m.[36mchannelVideosTest1[0m finished, took 0.002 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 1 total, 0.004s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controller.HomeControllerTest, sbt.ForkMain$AnnotatedFingerscan@2a226347, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36mtestIndex[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36mtestIndex[0m finished, took 2.971 sec[0m
+[0m[[0m[0minfo[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36msearch[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36msearch[0m finished, took 12.53 sec[0m
+[0m[[0m[0minfo[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36mvideos[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36mvideos[0m finished, took 1.568 sec[0m
+[0m[[0m[0minfo[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36mprofile[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36mprofile[0m finished, took 2.195 sec[0m
+[0m[[0m[0minfo[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36mws[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36mws[0m finished, took 2.611 sec[0m
+[0m[[0m[0minfo[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36msimilar[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest controller.[33mHomeControllerTest[0m.[36msimilar[0m finished, took 1.178 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 6 total, 23.058s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 6 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(actors.CommentsActorTest, sbt.ForkMain$AnnotatedFingerscan@23fcb325, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run started[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mTest actors.[33mCommentsActorTest[0m.[36mTest[0m started[0m
+[0m[[0m[0mdebug[0m] [0m[0mTest actors.[33mCommentsActorTest[0m.[36mTest[0m finished, took 0.848 sec[0m
+[0m[[0m[0minfo[0m] [0m[0m[34mTest run finished: [0m[34m0 failed[0m[34m, [0m[34m0 ignored[0m[34m, 1 total, 0.848s[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0mSummary for JUnit not available.[0m
+[0m[[0m[0minfo[0m] [0m[0mPassed: Total 17, Failed 0, Errors 0, Passed 17[0m
+[0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	models.TestVideo[0m
+[0m[[0m[0mdebug[0m] [0m[0m	actors.SearchActorTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	models.TestProfile[0m
+[0m[[0m[0mdebug[0m] [0m[0m	UnitTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Service.YouTubeApiTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	models.TestGetComments[0m
+[0m[[0m[0mdebug[0m] [0m[0m	actors.ProfileActorTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	models.TestSearchingResults[0m
+[0m[[0m[0mdebug[0m] [0m[0m	models.TestChannelVideos[0m
+[0m[[0m[0mdebug[0m] [0m[0m	controller.HomeControllerTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	actors.CommentsActorTest[0m

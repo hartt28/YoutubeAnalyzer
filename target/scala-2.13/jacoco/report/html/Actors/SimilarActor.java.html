@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SimilarActor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">Actors</a> &gt; <span class="el_source">SimilarActor.java</span></div><h1>SimilarActor.java</h1><pre class="source lang-java linenums">package Actors;
+
+import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import models.*;
+import services.AsynProcessor;
+import static akka.pattern.Patterns.pipe;
+
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletionStage;
+/**
+ * @author Geer Jiang
+ */
+public class SimilarActor extends AbstractActor{
+    /**AsynProcessor from services*/
+    private AsynProcessor asynProcessor;
+    /**ActorRef of Actor*/
+    private ActorRef actorRef;
+    /**
+     * Constructor
+     */
+<span class="fc" id="L25">    public SimilarActor() {</span>
+<span class="fc" id="L26">        this.asynProcessor = new AsynProcessor();</span>
+<span class="fc" id="L27">    }</span>
+    /**
+     * Create an instance of the class
+     * @return Props
+     */
+    public static Props props(){
+<span class="fc" id="L33">        return Props.create(SimilarActor.class);</span>
+    }
+    /**
+     * Start Actor
+     */
+    @Override
+    public void preStart(){
+<span class="fc" id="L40">        System.out.println(&quot;Similar Actor Started&quot;);</span>
+<span class="fc" id="L41">    }</span>
+    /**
+     * Similar Message
+     */
+    static public class SimilarRequest{
+        String searchKey;
+<span class="fc" id="L47">        public SimilarRequest(String searchKey) {</span>
+<span class="fc" id="L48">            this.searchKey = searchKey;</span>
+<span class="fc" id="L49">        }</span>
+    }
+    /**
+     * Handle the incoming messages
+     * @return Receive receive
+     */
+    @Override
+    public Receive createReceive() {
+<span class="fc" id="L57">        return receiveBuilder().</span>
+<span class="fc" id="L58">                match(SimilarRequest.class,</span>
+                        similarRequest -&gt;
+                        {
+<span class="fc" id="L61">                            CompletionStage&lt;List&lt;String&gt;&gt; completionStage = asynProcessor.similarSearchAsync(similarRequest.searchKey);</span>
+<span class="fc" id="L62">                            actorRef = getSender();</span>
+<span class="fc" id="L63">                            pipe(completionStage,getContext().dispatcher()).to(actorRef);</span>
+<span class="fc" id="L64">                        }</span>
+<span class="fc" id="L65">                ).build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

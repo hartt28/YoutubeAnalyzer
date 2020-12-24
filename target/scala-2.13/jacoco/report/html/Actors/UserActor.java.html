@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserActor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">Actors</a> &gt; <span class="el_source">UserActor.java</span></div><h1>UserActor.java</h1><pre class="source lang-java linenums">package Actors;
+
+import akka.actor.AbstractActor;
+import akka.actor.ActorPath;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import akka.serialization.JSerializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import models.SearchingResults;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import services.AsynProcessor;
+
+import java.util.List;
+import java.util.Set;
+import javax.inject.Singleton;
+import javax.websocket.OnMessage;
+import javax.websocket.server.ServerEndpoint;
+/**
+ * @author Chenwen Wang
+ */
+public class UserActor extends AbstractActor {
+    /**ActorRef of Actor*/
+    private ActorRef supervisor;
+    /**Constructor*/
+<span class="fc" id="L30">    public UserActor(){</span>
+<span class="fc" id="L31">        this.supervisor = null;</span>
+<span class="fc" id="L32">    }</span>
+    /**
+     * Create an instance of the class using.
+     * @return Props
+     */
+    public static Props props(){
+<span class="fc" id="L38">        System.out.println(&quot;User Actor Started&quot;);</span>
+<span class="fc" id="L39">        return Props.create(UserActor.class);</span>
+    }
+    /**
+     * Handle the incoming messages
+     * @return Receive receive
+     */
+    @Override
+    public Receive createReceive() {
+<span class="fc" id="L47">        return receiveBuilder()</span>
+<span class="fc" id="L48">                .match(SearchMessage.class, this::parseToJson)</span>
+<span class="fc" id="L49">                .match(RegisterSuperMsg.class, msg -&gt;{supervisor = sender(); })</span>
+<span class="fc" id="L50">                .build();</span>
+    }
+    /**
+     * Start Actor
+     */
+    @Override
+    public void preStart(){
+<span class="fc" id="L57">        System.out.println(&quot;Sending Register Message from User Actor&quot;);</span>
+<span class="fc" id="L58">        context().actorSelection(&quot;/user/SearchActor&quot;).tell(new SearchActor.RegisterMsg(),self());</span>
+<span class="fc" id="L59">    }</span>
+    /**
+     *Constructor
+     */
+<span class="fc" id="L63">    static public class RegisterSuperMsg {</span>
+    }
+    /**
+     * Constructor for messages
+     */
+    static public class SearchMessage{
+
+        private Set&lt;SearchingResults&gt; results;
+        private String searchKey;
+
+<span class="fc" id="L73">        public SearchMessage(Set&lt;SearchingResults&gt; results,String key) {</span>
+<span class="fc" id="L74">            this.results = results;</span>
+<span class="fc" id="L75">            this.searchKey = key;</span>
+<span class="fc" id="L76">        }</span>
+    }
+
+    /**
+     * Process the searchMessage to Json.
+     * @param searchMessage - of SearchMessage class.
+     */
+    public void parseToJson(SearchMessage searchMessage){
+<span class="nc" id="L84">        Set&lt;SearchingResults&gt; results = searchMessage.results;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        for (SearchingResults r: results ) {</span>
+
+<span class="nc" id="L87">            ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L88">            JsonNode response = mapper.valueToTree(r);</span>
+<span class="nc" id="L89">            System.out.println(&quot;get res&quot;);</span>
+<span class="nc" id="L90">            supervisor.tell(response, self());</span>
+
+<span class="nc" id="L92">        }</span>
+<span class="nc" id="L93">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

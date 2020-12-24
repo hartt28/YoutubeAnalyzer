@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>index.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">index.template.scala</span></div><h1>index.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+
+<span class="nc" id="L24">object index extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template1[AssetsFinder,play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /**/
+  def apply/*2.2*/(implicit assetsFinder: AssetsFinder):play.twirl.api.HtmlFormat.Appendable = {
+<span class="nc" id="L28">    _display_ {</span>
+      {
+
+
+<span class="nc" id="L32">Seq[Any](format.raw/*3.1*/(&quot;&quot;&quot;</span>
+<span class="nc" id="L33">&quot;&quot;&quot;),_display_(/*4.2*/main(&quot;YouTubeAnalyzer&quot;)/*4.25*/ {_display_(Seq[Any](format.raw/*4.27*/(&quot;&quot;&quot;</span>
+
+
+<span class="nc" id="L36">&quot;&quot;&quot;)))}),format.raw/*7.2*/(&quot;&quot;&quot;</span>
+
+&quot;&quot;&quot;))
+      }
+    }
+  }
+
+<span class="nc" id="L43">  def render(assetsFinder:AssetsFinder): play.twirl.api.HtmlFormat.Appendable = apply(assetsFinder)</span>
+
+<span class="nc" id="L45">  def f:((AssetsFinder) =&gt; play.twirl.api.HtmlFormat.Appendable) = (assetsFinder) =&gt; apply(assetsFinder)</span>
+
+<span class="nc" id="L47">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  DATE: 2020-12-10T23:10:15.859661
+                  SOURCE: /Users/yuejunchen/Dropbox/SOEN6441/Assignment Two/app/views/index.scala.html
+                  HASH: 8146f8b4a020a891d593434a4a4d23c5958d0098
+                  MATRIX: 913-&gt;2|1044-&gt;40|1071-&gt;42|1102-&gt;65|1141-&gt;67|1174-&gt;71
+                  LINES: 27-&gt;2|32-&gt;3|33-&gt;4|33-&gt;4|33-&gt;4|36-&gt;7
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

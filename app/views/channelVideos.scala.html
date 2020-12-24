@@ -1,0 +1,80 @@
+@*
+* This template takes a two arguments, a String containing a
+* message to display and an AssetsFinder to locate static assets.
+*@
+@import java.util.concurrent.CompletableFuture
+@import com.google.api.services.youtube.model.PlaylistItem
+
+@(list:List[Videos])(implicit assetsFinder: AssetsFinder)
+
+@*
+* Call the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+@main("Search Result") {
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style type="text/css">
+                h2{
+                    margin-top: 20px;
+                    color:#c5464a;
+                    font-size: 20px;
+                }
+                body{
+                    text-align: center;
+
+                }
+                table.gridtable {
+                    font-family: verdana,arial,sans-serif;
+                    font-size:11px;
+                    color:#333333;
+                    border-width: 1px;
+                    border-color: #666666;
+                    border-collapse: collapse;
+                    width:70%;
+                    margin:auto;
+                    margin-bottom: 10%;
+
+                }
+                table.gridtable th {
+                    border-width: 1px;
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #c5464a;
+                    color: #FFFFFF;
+                    text-align: center;
+                }
+                table.gridtable td {
+                    border-width: 1px;
+                    padding: 8px;
+                    border-style: solid;
+                    border-color: #666666;
+                    background-color: #ffffff;
+                    text-align: center;
+                }
+        </style>
+
+    </head>
+    <body>
+        <body>
+            <div class = "container">
+                <table class="gridtable">
+                    <tr>
+                        <th>Date</th><th>Title</th>
+                    </tr>
+        @for(result <- list) {
+            <tr>
+                <td>@result.getStringDate</td>
+                <td>@result.getVideoTitle</td>
+            </tr>
+        }
+                </table>
+            </div>
+    </body>
+}
+
+
+

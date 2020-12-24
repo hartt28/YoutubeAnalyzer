@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>main.template.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">views.html</a> &gt; <span class="el_source">main.template.scala</span></div><h1>main.template.scala</h1><pre class="source lang-java linenums">
+package views.html
+
+import _root_.play.twirl.api.TwirlFeatureImports._
+import _root_.play.twirl.api.TwirlHelperImports._
+import _root_.play.twirl.api.Html
+import _root_.play.twirl.api.JavaScript
+import _root_.play.twirl.api.Txt
+import _root_.play.twirl.api.Xml
+import models._
+import controllers._
+import play.api.i18n._
+import views.html._
+import play.api.templates.PlayMagic._
+import java.lang._
+import java.util._
+import play.core.j.PlayMagicForJava._
+import play.mvc._
+import play.api.data.Field
+import play.data._
+import play.core.j.PlayFormsMagicForJava._
+import scala.jdk.CollectionConverters._
+
+<span class="pc" id="L24">object main extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template3[String,Html,AssetsFinder,play.twirl.api.HtmlFormat.Appendable] {</span>
+
+  /*
+ * This template is called from the `index` template. This template
+ * handles the rendering of the page header and body tags. It takes
+ * two arguments, a `String` for the title of the page and an `Html`
+ * object to insert into the body of the page.
+ */
+  def apply/*7.2*/(title: String)(content: Html)(implicit assetsFinder: AssetsFinder):play.twirl.api.HtmlFormat.Appendable = {
+<span class="fc" id="L33">    _display_ {</span>
+      {
+
+
+<span class="fc" id="L37">Seq[Any](format.raw/*8.1*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L38">&quot;&quot;&quot;),format.raw/*9.1*/(&quot;&quot;&quot;&lt;!DOCTYPE html&gt;</span>
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+<span class="fc" id="L41">        &quot;&quot;&quot;),format.raw/*12.62*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L42">        &quot;&quot;&quot;),format.raw/*13.9*/(&quot;&quot;&quot;&lt;title&gt;&quot;&quot;&quot;),_display_(/*13.17*/title),format.raw/*13.22*/(&quot;&quot;&quot;&lt;/title&gt;</span>
+<span class="fc" id="L43">        &lt;link rel=&quot;stylesheet&quot; media=&quot;screen&quot; href=&quot;&quot;&quot;&quot;),_display_(/*14.54*/assetsFinder/*14.66*/.path(&quot;stylesheets/main.css&quot;)),format.raw/*14.95*/(&quot;&quot;&quot;&quot;&gt;</span>
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css?family=Sofia&quot;&gt;
+<span class="fc" id="L45">        &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/png&quot; href=&quot;&quot;&quot;&quot;),_display_(/*16.59*/assetsFinder/*16.71*/.path(&quot;images/favicon.png&quot;)),format.raw/*16.98*/(&quot;&quot;&quot;&quot;&gt;</span>
+<span class="fc" id="L46">&quot;&quot;&quot;),format.raw/*17.115*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L47">        &quot;&quot;&quot;),format.raw/*18.9*/(&quot;&quot;&quot;&lt;style&gt;</span>
+
+<span class="fc" id="L49">                * &quot;&quot;&quot;),format.raw/*20.19*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*20.20*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L50">                    &quot;&quot;&quot;),format.raw/*21.21*/(&quot;&quot;&quot;box-sizing: border-box;</span>
+<span class="fc" id="L51">                &quot;&quot;&quot;),format.raw/*22.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*22.18*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L53">                &quot;&quot;&quot;),format.raw/*24.17*/(&quot;&quot;&quot;h1&quot;&quot;&quot;),format.raw/*24.19*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*24.20*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L54">                    &quot;&quot;&quot;),format.raw/*25.21*/(&quot;&quot;&quot;margin-top: 20px;</span>
+                    color:#c5464a;
+                    font-size: 45px;
+<span class="fc" id="L57">                &quot;&quot;&quot;),format.raw/*28.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*28.18*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L59">                &quot;&quot;&quot;),format.raw/*30.17*/(&quot;&quot;&quot;body &quot;&quot;&quot;),format.raw/*30.22*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*30.23*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L60">                    &quot;&quot;&quot;),format.raw/*31.21*/(&quot;&quot;&quot;margin: 0;</span>
+                    padding: 0;
+                    background: #FFFFFF;
+                    font-weight: 500;
+                    font-family: &quot;Segoe UI&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial,sans-serif, FreeSans, Arimo;
+<span class="fc" id="L65">                &quot;&quot;&quot;),format.raw/*36.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*36.18*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L67">                &quot;&quot;&quot;),format.raw/*38.17*/(&quot;&quot;&quot;#container &quot;&quot;&quot;),format.raw/*38.28*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*38.29*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L68">                    &quot;&quot;&quot;),format.raw/*39.21*/(&quot;&quot;&quot;width: 500px;</span>
+                    height: 820px;
+                    margin: 0 auto;
+<span class="fc" id="L71">                &quot;&quot;&quot;),format.raw/*42.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*42.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L72">                &quot;&quot;&quot;),format.raw/*43.17*/(&quot;&quot;&quot;div.search &quot;&quot;&quot;),format.raw/*43.28*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*43.29*/(&quot;&quot;&quot;padding: 30px 0;&quot;&quot;&quot;),format.raw/*43.45*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*43.46*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L74">                &quot;&quot;&quot;),format.raw/*45.17*/(&quot;&quot;&quot;form &quot;&quot;&quot;),format.raw/*45.22*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*45.23*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L75">                    &quot;&quot;&quot;),format.raw/*46.21*/(&quot;&quot;&quot;position: relative;</span>
+                    width: 300px;
+                    margin: 0 auto;
+<span class="fc" id="L78">                &quot;&quot;&quot;),format.raw/*49.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*49.18*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L80">                &quot;&quot;&quot;),format.raw/*51.17*/(&quot;&quot;&quot;input, button &quot;&quot;&quot;),format.raw/*51.31*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*51.32*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L81">                    &quot;&quot;&quot;),format.raw/*52.21*/(&quot;&quot;&quot;border: none;</span>
+                    outline: none;
+<span class="fc" id="L83">                &quot;&quot;&quot;),format.raw/*54.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*54.18*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L85">                &quot;&quot;&quot;),format.raw/*56.17*/(&quot;&quot;&quot;input &quot;&quot;&quot;),format.raw/*56.23*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*56.24*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L86">                    &quot;&quot;&quot;),format.raw/*57.21*/(&quot;&quot;&quot;width: 100%;</span>
+                    height: 42px;
+                    padding-left: 13px;
+                    padding-right:46px;
+<span class="fc" id="L90">                &quot;&quot;&quot;),format.raw/*61.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*61.18*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L92">                &quot;&quot;&quot;),format.raw/*63.17*/(&quot;&quot;&quot;button &quot;&quot;&quot;),format.raw/*63.24*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*63.25*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L93">                    &quot;&quot;&quot;),format.raw/*64.21*/(&quot;&quot;&quot;height: 42px;</span>
+                    width: 42px;
+                    cursor: pointer;
+                    position: absolute;
+<span class="fc" id="L97">                &quot;&quot;&quot;),format.raw/*68.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*68.18*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L99">                &quot;&quot;&quot;),format.raw/*70.17*/(&quot;&quot;&quot;.bar6 input &quot;&quot;&quot;),format.raw/*70.29*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*70.30*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L100">                    &quot;&quot;&quot;),format.raw/*71.21*/(&quot;&quot;&quot;border: 2px solid #c5464a;</span>
+                    border-radius: 5px;
+                    background: transparent;
+                    top: 0;
+                    right: 0;
+<span class="fc" id="L105">                &quot;&quot;&quot;),format.raw/*76.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*76.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L106">                &quot;&quot;&quot;),format.raw/*77.17*/(&quot;&quot;&quot;.bar6 button &quot;&quot;&quot;),format.raw/*77.30*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*77.31*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L107">                    &quot;&quot;&quot;),format.raw/*78.21*/(&quot;&quot;&quot;background: #c5464a;</span>
+                    border-radius: 0 5px 5px 0;
+                    width: 60px;
+                    top: 0;
+                    right: 0;
+<span class="fc" id="L112">                &quot;&quot;&quot;),format.raw/*83.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*83.18*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L113">                &quot;&quot;&quot;),format.raw/*84.17*/(&quot;&quot;&quot;.bar6 button:before &quot;&quot;&quot;),format.raw/*84.37*/(&quot;&quot;&quot;{&quot;&quot;&quot;),format.raw/*84.38*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L114">                    &quot;&quot;&quot;),format.raw/*85.21*/(&quot;&quot;&quot;content: &quot;Go&quot;;</span>
+                    font-size: 13px;
+                    color: #F9F0DA;
+<span class="fc" id="L117">                &quot;&quot;&quot;),format.raw/*88.17*/(&quot;&quot;&quot;}&quot;&quot;&quot;),format.raw/*88.18*/(&quot;&quot;&quot;</span>
+
+<span class="fc" id="L119">        &quot;&quot;&quot;),format.raw/*90.9*/(&quot;&quot;&quot;&lt;/Style&gt;</span>
+    &lt;/head&gt;
+    &lt;body  data-ws-url=&quot;ws://localhost:9000/ws&quot;&gt;
+
+        &lt;div class=&quot;form-group&quot; style=&quot;text-align: center&quot;&gt;
+            &lt;h1&gt;
+                YouTube Analyzer
+            &lt;/h1&gt;
+            &lt;br&gt;
+            &lt;br&gt;
+
+
+            &lt;div class=&quot;search bar6&quot;&gt;
+                &lt;div id=&quot;search&quot;&gt;
+                    &lt;form action=&quot;search&quot; method=&quot;GET&quot; id=&quot;searchForm&quot; name=&quot;search&quot;&gt;
+                    &lt;input type=&quot;text&quot; name=&quot;searchkey&quot; id=&quot;query&quot; placeholder=&quot;Search&quot;&gt;
+                    &lt;button type=&quot;submit&quot; value=&quot;Search&quot; onclick=&quot;sendMessage()&quot;&gt;&lt;/button&gt;
+                    &lt;/form&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+<span class="fc" id="L140">                &quot;&quot;&quot;),format.raw/*112.32*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L141">        &quot;&quot;&quot;),_display_(/*113.10*/content),format.raw/*113.17*/(&quot;&quot;&quot;</span>
+<span class="fc" id="L142">    &quot;&quot;&quot;),format.raw/*114.5*/(&quot;&quot;&quot;&lt;/body&gt;</span>
+
+
+
+&lt;/html&gt;
+&quot;&quot;&quot;))
+      }
+    }
+  }
+
+<span class="nc" id="L152">  def render(title:String,content:Html,assetsFinder:AssetsFinder): play.twirl.api.HtmlFormat.Appendable = apply(title)(content)(assetsFinder)</span>
+
+<span class="nc" id="L154">  def f:((String) =&gt; (Html) =&gt; (AssetsFinder) =&gt; play.twirl.api.HtmlFormat.Appendable) = (title) =&gt; (content) =&gt; (assetsFinder) =&gt; apply(title)(content)(assetsFinder)</span>
+
+<span class="nc" id="L156">  def ref: this.type = this</span>
+
+}
+
+
+              /*
+                  -- GENERATED --
+                  DATE: 2020-12-16T14:00:54.357918
+                  SOURCE: /Users/yuejunchen/Dropbox/SOEN6441/Assignment Two/app/views/main.scala.html
+                  HASH: 9f4c46d5d1afa8c77a897701d40fc1dbdf6df157
+                  MATRIX: 1178-&gt;260|1339-&gt;328|1366-&gt;329|1446-&gt;434|1482-&gt;443|1517-&gt;451|1543-&gt;456|1632-&gt;518|1653-&gt;530|1703-&gt;559|1876-&gt;705|1897-&gt;717|1945-&gt;744|1977-&gt;861|2013-&gt;870|2068-&gt;897|2097-&gt;898|2146-&gt;919|2214-&gt;959|2243-&gt;960|2289-&gt;978|2319-&gt;980|2348-&gt;981|2397-&gt;1002|2531-&gt;1108|2560-&gt;1109|2606-&gt;1127|2639-&gt;1132|2668-&gt;1133|2717-&gt;1154|2991-&gt;1400|3020-&gt;1401|3066-&gt;1419|3105-&gt;1430|3134-&gt;1431|3183-&gt;1452|3312-&gt;1553|3341-&gt;1554|3386-&gt;1571|3425-&gt;1582|3454-&gt;1583|3498-&gt;1599|3527-&gt;1600|3573-&gt;1618|3606-&gt;1623|3635-&gt;1624|3684-&gt;1645|3818-&gt;1751|3847-&gt;1752|3893-&gt;1770|3935-&gt;1784|3964-&gt;1785|4013-&gt;1806|4106-&gt;1871|4135-&gt;1872|4181-&gt;1890|4215-&gt;1896|4244-&gt;1897|4293-&gt;1918|4464-&gt;2061|4493-&gt;2062|4539-&gt;2080|4574-&gt;2087|4603-&gt;2088|4652-&gt;2109|4820-&gt;2249|4849-&gt;2250|4895-&gt;2268|4935-&gt;2280|4964-&gt;2281|5013-&gt;2302|5227-&gt;2488|5256-&gt;2489|5301-&gt;2506|5342-&gt;2519|5371-&gt;2520|5420-&gt;2541|5624-&gt;2717|5653-&gt;2718|5698-&gt;2735|5746-&gt;2755|5775-&gt;2756|5824-&gt;2777|5956-&gt;2881|5985-&gt;2882|6022-&gt;2892|6725-&gt;3656|6763-&gt;3666|6792-&gt;3673|6825-&gt;3678
+                  LINES: 32-&gt;7|37-&gt;8|38-&gt;9|41-&gt;12|42-&gt;13|42-&gt;13|42-&gt;13|43-&gt;14|43-&gt;14|43-&gt;14|45-&gt;16|45-&gt;16|45-&gt;16|46-&gt;17|47-&gt;18|49-&gt;20|49-&gt;20|50-&gt;21|51-&gt;22|51-&gt;22|53-&gt;24|53-&gt;24|53-&gt;24|54-&gt;25|57-&gt;28|57-&gt;28|59-&gt;30|59-&gt;30|59-&gt;30|60-&gt;31|65-&gt;36|65-&gt;36|67-&gt;38|67-&gt;38|67-&gt;38|68-&gt;39|71-&gt;42|71-&gt;42|72-&gt;43|72-&gt;43|72-&gt;43|72-&gt;43|72-&gt;43|74-&gt;45|74-&gt;45|74-&gt;45|75-&gt;46|78-&gt;49|78-&gt;49|80-&gt;51|80-&gt;51|80-&gt;51|81-&gt;52|83-&gt;54|83-&gt;54|85-&gt;56|85-&gt;56|85-&gt;56|86-&gt;57|90-&gt;61|90-&gt;61|92-&gt;63|92-&gt;63|92-&gt;63|93-&gt;64|97-&gt;68|97-&gt;68|99-&gt;70|99-&gt;70|99-&gt;70|100-&gt;71|105-&gt;76|105-&gt;76|106-&gt;77|106-&gt;77|106-&gt;77|107-&gt;78|112-&gt;83|112-&gt;83|113-&gt;84|113-&gt;84|113-&gt;84|114-&gt;85|117-&gt;88|117-&gt;88|119-&gt;90|140-&gt;112|141-&gt;113|141-&gt;113|142-&gt;114
+                  -- GENERATED --
+              */
+          
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

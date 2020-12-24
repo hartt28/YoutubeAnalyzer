@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HomeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">controllers</a> &gt; <span class="el_source">HomeController.java</span></div><h1>HomeController.java</h1><pre class="source lang-java linenums">package controllers;
+
+import Actors.*;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.Props;
+import akka.stream.Materializer;
+
+import models.*;
+import play.cache.AsyncCacheApi;
+import play.libs.streams.ActorFlow;
+import play.mvc.Controller;
+import play.mvc.Http;
+import play.mvc.Result;
+import play.mvc.WebSocket;
+import scala.compat.java8.FutureConverters;
+import services.AsynProcessor;
+import views.html.*;
+
+import static akka.pattern.Patterns.ask;
+import Actors.ProfileActor;
+import javax.inject.Inject;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.time.LocalTime;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
+
+/**
+ * This controller contains an action to handle HTTP requests
+ * to the application's home page.
+ */
+public class HomeController extends Controller {
+
+    /**
+     * initial assetFinder
+     */
+    private final AssetsFinder assetsFinder;
+    private AsyncCacheApi cache;
+    @Inject
+    private ActorSystem actorSystem;
+    @Inject
+    private Materializer materializer;
+    private ActorRef searchActor;
+
+
+    /**
+     * Inject and
+     * @param assetsFinder handle cached &amp; find asstes
+     * @param actorSystem actor system
+     * @param materializer materializer
+     */
+
+    @Inject
+<span class="fc" id="L57">    public HomeController(AssetsFinder assetsFinder, AsyncCacheApi cache, ActorSystem actorSystem, Materializer materializer) {</span>
+<span class="fc" id="L58">        this.assetsFinder = assetsFinder;</span>
+<span class="fc" id="L59">        this.cache = cache;</span>
+<span class="fc" id="L60">        this.actorSystem = actorSystem;</span>
+<span class="fc" id="L61">        this.materializer = materializer;</span>
+<span class="fc" id="L62">        this.searchActor = actorSystem.actorOf(SearchActor.getProps(),&quot;SearchActor&quot;);</span>
+<span class="fc" id="L63">    }</span>
+
+
+    /**
+     * initial AsynProcessor
+     */
+<span class="fc" id="L69">    AsynProcessor general = new AsynProcessor();</span>
+
+
+
+    /**
+     * An action that renders an HTML page with a welcome message.
+     * The configuration in the &lt;code&gt;routes&lt;/code&gt; file means that
+     * this method will be called when the application receives a
+     * &lt;code&gt;GET&lt;/code&gt; request with a path of &lt;code&gt;/&lt;/code&gt;.
+     * @author Ke Xuan, Chenwen
+     */
+    public CompletionStage&lt;Result&gt; index(Http.Request request) throws GeneralSecurityException, IOException, ExecutionException, InterruptedException {
+<span class="fc" id="L81">        String value = LocalTime.now().toString();</span>
+<span class="fc" id="L82">        Optional&lt;String&gt; userSession = request.session().get(&quot;Connected&quot;);</span>
+
+<span class="fc" id="L84">        AsynProcessor asynProcessor = new AsynProcessor();</span>
+
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (userSession.isEmpty()) {</span>
+<span class="fc" id="L87">            return CompletableFuture.supplyAsync(() -&gt; (redirect(&quot;/&quot;).addingToSession(request, &quot;Connected&quot;, value)));</span>
+        }
+        else{
+
+<span class="nc" id="L91">            CompletionStage&lt;Optional&lt;List&lt;SearchingResults&gt;&gt;&gt; optionalCompletionStage = cache.get(&quot;Connected&quot;);</span>
+
+<span class="nc" id="L93">            return optionalCompletionStage.thenApply(list -&gt; {</span>
+<span class="nc" id="L94">                list.ifPresent(videos -&gt; ok(search.render(&quot;&quot;, videos, assetsFinder)));</span>
+<span class="nc" id="L95">                return ok(index.render(assetsFinder));</span>
+            });
+        }
+
+
+    }
+
+
+
+    /**
+     * Async search process
+     * @param searchKey query term
+     * @return not found message if error occurred or return search result list to html
+     * @author Ke Xuan, Chenwen
+     */
+    public CompletionStage&lt;Result&gt; search(String searchKey,Http.Request request) throws ExecutionException, InterruptedException {
+<span class="fc" id="L111">        AsynProcessor general = new AsynProcessor();</span>
+<span class="fc" id="L112">        Optional&lt;String&gt; userSession = request.session().get(&quot;Connected&quot;);</span>
+
+<span class="fc" id="L114">        CompletableFuture&lt;List&lt;SearchingResults&gt;&gt; searchResult = general.processSearchAsync(searchKey);</span>
+
+<span class="fc" id="L116">        SearchActor.SearchRequest SearchRequest = new SearchActor.SearchRequest(searchKey);</span>
+
+<span class="fc" id="L118">        searchActor.tell(SearchRequest,ActorRef.noSender());</span>
+
+<span class="fc" id="L120">        CompletionStage&lt;Optional&lt;List&lt;SearchingResults&gt;&gt;&gt; cacheResult = cache.get(userSession.toString());</span>
+
+<span class="fc" id="L122">        return searchResult.thenCombine(cacheResult,(searchR, cacheR) -&gt; {</span>
+<span class="fc" id="L123">            List&lt;SearchingResults&gt; videosList = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">            if(!cacheR.isEmpty()){</span>
+<span class="nc" id="L125">                videosList = cacheR.get();</span>
+            }
+<span class="fc" id="L127">            videosList.addAll(searchR);</span>
+
+<span class="fc" id="L129">            System.out.println(userSession.toString());</span>
+<span class="fc" id="L130">            cache.set(userSession.toString(),videosList);</span>
+
+<span class="fc" id="L132">            return ok(search.render(searchKey,videosList,assetsFinder));</span>
+        });
+
+
+    }
+
+
+    /**
+     * Async search recent videos in channel process
+     * @param keyword query term
+     * @param channelID channel id
+     * @return not found message if error occurred or return search result list to html
+     * @author YueJun Chen
+     */
+    public CompletionStage&lt;Result&gt; CVideos(String channelID,String keyword) {
+//        return CompletableFuture.supplyAsync(() -&gt; {
+//            try {
+//                List&lt;Videos&gt; cv = general.processPlayListAsync(channelID,keyword).get();
+//                System.out.println(cv.size());
+//                return ok(channelVideos.render( cv, assetsFinder));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return notFound(&quot;Error&quot;);
+//            }
+//        });
+<span class="fc" id="L157">        ActorRef actorRef = actorSystem.actorOf(VideosActor.props());</span>
+<span class="fc" id="L158">        CompletionStage&lt;Object&gt; Videos = FutureConverters.toJava(</span>
+<span class="fc" id="L159">                ask(actorRef,new VideosActor.VideosRequest(channelID,keyword),10000)</span>
+        );
+        //cast objects to videos
+<span class="fc" id="L162">        return Videos.thenApply(result -&gt;{</span>
+<span class="fc" id="L163">            List&lt;Videos&gt; cv = new ArrayList&lt;Videos&gt;();</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">            if (result instanceof ArrayList&lt;?&gt;) {</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">                for (Object o : (List&lt;?&gt;) result) {</span>
+<span class="fc" id="L166">                    cv.add(Videos.class.cast(o));</span>
+<span class="fc" id="L167">                }}</span>
+<span class="fc" id="L168">            return ok(views.html.channelVideos.render(cv,assetsFinder));});</span>
+    }
+
+
+
+    /**
+     * Async process profile action
+     * @param ChannelID channel id
+     * @return not found message if error occurred or return profile object to html
+     * @throws throw GeneralSecurityException
+     * @throws throw IOException
+     * @author Chenwen
+     */
+
+    public CompletionStage&lt;Result&gt; profile(String ChannelID) throws GeneralSecurityException, IOException {
+//        CompletableFuture&lt;ProfileImp&gt; profileImp = new CompletableFuture&lt;ProfileImp&gt;();
+//        profileImp = general.processProfileAsync(ChannelID);
+//        return profileImp.thenApply(r -&gt; ok(profile.render(r,assetsFinder)));
+<span class="fc" id="L186">        ActorRef actorRef = actorSystem.actorOf(ProfileActor.props());</span>
+<span class="fc" id="L187">        CompletionStage&lt;Object&gt; profile = FutureConverters.toJava(</span>
+<span class="fc" id="L188">                ask(actorRef,new ProfileActor.ProfileRequest(ChannelID),10000)</span>
+        );
+
+<span class="fc" id="L191">        return profile.thenApply(result -&gt; ok(views.html.profile.render((ProfileImp) result,assetsFinder)));</span>
+    }
+    /**
+     * Async process similar videos action
+     * @param videoId search key
+     * @return not found message if error occurred or return profile object to html
+     * @author Geer Jiang
+     */
+
+    public CompletionStage&lt;Result&gt; similar(String videoId) {
+//        CompletableFuture&lt;List&lt;String&gt;&gt; SimilarSearch = general.similarSearchAsync(videoId);
+//        return SimilarSearch.thenApply(r -&gt; ok(similar.render(videoId,r,assetsFinder)));
+<span class="fc" id="L203">        ActorRef actorRef = actorSystem.actorOf(SimilarActor.props());</span>
+<span class="fc" id="L204">        CompletionStage&lt;Object&gt; Similar = FutureConverters.toJava(</span>
+<span class="fc" id="L205">                ask(actorRef,new SimilarActor.SimilarRequest(videoId),10000)</span>
+        );
+<span class="fc" id="L207">        return Similar.thenApply(result -&gt;{</span>
+<span class="fc" id="L208">            List&lt;String&gt; sList = new ArrayList&lt;String&gt;();</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">            if (result instanceof ArrayList&lt;?&gt;) {</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">                for (Object o : (List&lt;?&gt;) result) {</span>
+<span class="fc" id="L211">                    sList.add((String)o);</span>
+<span class="fc" id="L212">                }}</span>
+<span class="fc" id="L213">            return ok(views.html.similar.render(sList,assetsFinder));});</span>
+    }
+    /**
+     * Create and Start WebSocket
+     * @return WebSocket
+     * @author Chenwen Wang
+     */
+    public WebSocket ws(){
+<span class="fc" id="L221">        System.out.println(&quot;WebSocket Started&quot;);</span>
+<span class="fc" id="L222">        return WebSocket.Json.accept(request -&gt; ActorFlow.actorRef(Supervisor::props,actorSystem,materializer));</span>
+    }}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
